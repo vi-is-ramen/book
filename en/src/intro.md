@@ -31,7 +31,7 @@ No more copy‑paste‑search‑replace. Just `cargo inherit user/template to my
 - `inherit-core` – the engine that scans, replaces, and respects `.inherignore`
 - `cargo-inherit` – the CLI that adds aliases, defaults, caching, and interactive prompts
 
-[> Read more](./cargo-inherit.md)
+[> Read more](./my-crates/cargo-inherit.md)
 
 ### A Rust Dialect (Working Title: "Dust")
 
@@ -44,8 +44,8 @@ This is a secret so far ;P
 - `inherit-core` and `cargo-inherit` (already mentioned)
 - And more that will appear as I write them
 
-[> Read more on kissreplace](./kissreplace.md)
-[> Read more on lazyget](./lazyget.md)
+[> Read more on kissreplace](./my-crates/kissreplace.md)
+[> Read more on lazyget](./my-crates/lazyget.md)
 
 ### Blog‑Style Posts
 
