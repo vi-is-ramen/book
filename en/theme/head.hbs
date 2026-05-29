@@ -1,0 +1,46 @@
+<style>
+    .lang-switcher {
+        float: right;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        height: var(--menu-bar-height);
+        font-family: sans-serif;
+    }
+    .lang-switcher a {
+        color: var(--icons);
+        text-decoration: none;
+        padding: 0 8px;
+        font-weight: 500;
+        opacity: 0.4;
+        transition: opacity 0.2s;
+    }
+    .lang-switcher a.active {
+        opacity: 1;
+        font-weight: bold;
+        color: var(--links);
+    }
+    .lang-switcher a:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var menuBar = document.querySelector(".menu-bar-left");
+        if (menuBar) {
+            var switcher = document.createElement("div");
+            switcher.className = "lang-switcher";
+            
+            var isRu = window.location.pathname.includes("/ru/");
+            
+            switcher.innerHTML = `
+                <a href="../en/index.html" class="${!isRu ? 'active' : ''}">EN</a>
+                <span style="color: var(--icons); opacity: 0.3;">|</span>
+                <a href="../ru/index.html" class="${isRu ? 'active' : ''}">RU</a>
+            `;
+            
+            menuBar.parentNode.insertBefore(switcher, menuBar.nextSibling);
+        }
+    });
+</script>

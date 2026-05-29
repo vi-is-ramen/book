@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        (function() {
+            var userLang = navigator.language || navigator.userLanguage; 
+            if (userLang.toLowerCase().startsWith('ru')) {
+                window.location.href = './ru/index.html';
+            } else {
+                window.location.href = './en/index.html';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>Redirecting... <a href="./en/index.html">Click here</a></p>
+</body>
+</html>
