@@ -2,7 +2,3 @@
 title = "The Book"
 authors = ["Vi Ramen"]
 language = "ru"
-
-[output.html]
-destination = "../book/ru"
-theme = "theme"

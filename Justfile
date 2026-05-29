@@ -2,10 +2,17 @@ default:
     @just --list | grep -v default
 
 build:
-    @rm -rf book
-    @cd en; mdbook build
-    @cd ru; mdbook build
-    @cp index.html book
+    @rm -rf book; \
+     mkdir book; \
+     cd en; \
+     mdbook build; \
+     cd ..; cd ru; \
+     mdbook build; \
+     cd ..; \
+     cp index.html book/; \
+     mkdir book/{en,ru}; \
+     cp -r en/book/* book/en; \
+     cp -r ru/book/* book/ru
 
 b: build
 
