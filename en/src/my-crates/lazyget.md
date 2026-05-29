@@ -125,12 +125,12 @@ where
 **Behaviour**:
 
 - Check if `cache_dir/artifact_id` exists.
-- If yes → return its path immediately.
+- If yes -> return its path immediately.
 - If no:
   - Create a temporary directory `.artifact_id-tmp` inside `cache_dir`.
   - Call `fetch_fn` with that temp directory.
-  - If `fetch_fn` succeeds → atomically rename temp dir to the final name.
-  - If `fetch_fn` fails → delete the temp directory and propagate the error.
+  - If `fetch_fn` succeeds -> atomically rename temp dir to the final name.
+  - If `fetch_fn` fails -> delete the temp directory and propagate the error.
 
 This guarantees that you never see a partially written or corrupted artifact.
 

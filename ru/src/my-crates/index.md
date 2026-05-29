@@ -1,3 +1,5 @@
-# My Crates
+# Мои Крейты
 
-This part of the book describes my crates. Guides and documentation: all what you need to use my crates. Documented are extra-tiny crates too: no one question should appear, I hope.
+В этой части книги описаны мои крейты. Руководства и документация: все, что Вам нужно
+для использования моих крейтов. Документация также охватывает очень маленькие крейты:
+надеюсь, ни у кого не возникнет лишних вопросов.

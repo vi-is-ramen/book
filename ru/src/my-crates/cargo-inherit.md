@@ -1,206 +1,211 @@
-# `cargo-inherit` – The Inherit CLI
+# `cargo-inherit` – CLI Для Inherit
 
-Welcome to `cargo-inherit` – the command‑line tool that turns any Git repository into a
-reusable, customisable project template. If you’ve ever copied a boilerplate project and
-then manually replaced all the placeholders, this tool is for you.
+Добро пожаловать в `cargo-inherit` — инструмент командной строки, который превращает
+любой репозиторий Git в многоразовый, настраиваемый шаблон проекта. Если Вы когда-либо
+копировали шаблонный проект, а затем вручную заменяли все заполнители, этот инструмент
+для Вас.
 
-`cargo-inherit` is a thin but powerful wrapper around [`inherit-core`](./inherit-core.md).
-It adds:
+`cargo-inherit` — это тонкая, но мощная обертка над [`inherit-core`](./inherit-core.md).
+Она добавляет:
 
-- **Template discovery** – from GitHub or any Git URL
-- **Aliases** – short names for long template paths
-- **Default values** – pre‑fill variables like `AUTHOR`
-- **Smart caching** – cloned templates are stored for speed
-- **Interactive prompts** – ask for missing variables with nice defaults
-- **Post‑creation hooks** – run shell commands after generation
-(e.g. `cargo fmt`, `git add .`)
-- **Configuration file** – keep your preferences and secrets safe
+- **Обнаружение шаблонов** – из GitHub или любой Git ссылки.
+- **Псевдонимы** – короткие имена для длинных путей к шаблонам.
+- **Значения по умолчанию** – предварительно заполняемые переменные, такие как `AUTHOR`.
+- **Умное кеширование** – клонированные шаблоны сохраняются для повышения скорости.
+- **Интерактивные запросы** – запросы для недостающих переменных с удобными значениями по умолчанию для повышения скорости.
+- **Хуки после создания** – запуск команд оболочки после создания проекта.
+(напр. `cargo fmt`, `git add .`)
+- **Файл конфигурации** – храните свои секреты и предпочтения в безопасности.
 
-Let’s dive in!
+Давайте погружаться!
 
-## Installation
+## Установка
 
-`cargo-inherit` is a Rust binary. Install it from crates.io:
+`cargo-inherit` - это бинарный файл Rust. Установите его из crates.io:
 
 ```bash
 cargo install cargo-inherit
 ```
 
-Make sure `~/.cargo/bin` is in your `PATH`. After installation, the command is `cargo-inherit` – but you can also use `inherit` if you add an alias or rename the binary.
+Убедитесь, что `~/.cargo/bin` присутствует в Вашей переменной `PATH`. После установки, команда будет `cargo inherit`.
 
-> **Note:** The binary is named `cargo-inherit`, but the examples in this chapter will use `inherit` for brevity. In practice you can run `cargo inherit` if you have `cargo-inherit` installed (Cargo forwards subcommands).
+> **Замечание:** бинарник называется `cargo-inherit`, но в примерах в этой статьи будет писаться просто `inherit` для краткости. На практике Вы сможете запускать `cargo inherit`.
 
-## Quick Start
+## Быстрый Старт
 
-Generate a new Rust library from the hypothetical `cargo-lib` template:
+Создание новой Rust-библиотеки из гипотетического шаблона `cargo-lib`:
 
 ```bash
 inherit rust-lib/cargo-lib to my-project
 ```
 
-The CLI will:
+Inherit:
 
-1. Clone `https://github.com/rust-lib/cargo-lib` (cached for next time).
-2. Read `Inherit.toml` and scan all files for `@VARIABLES@`.
-3. Ask you for values (with helpful descriptions and defaults from config).
-4. Generate `my-project/` with all placeholders replaced.
-5. Run `git init` and execute any `post_create` hooks.
+1. Склонирует `https://github.com/rust-lib/cargo-lib` (и закеширует для последующего использования).
+2. Прочитает `Inherit.toml` и просканирует файлы для `@ПЕРЕМЕННЫХ@`.
+3. Спросит у Вас значения (с полезными описаниями и значениями по умолчанию).
+4. Сгенерирует `my-project/`, заменив все плейсхолдеры.
+5. Запустит `git init` и выполнит `post_create` хуки.
 
-If you have a local template directory, you can use a `file://` URL or an absolute path:
+Если у Вас есть локальная папка с шаблоном, Вы можете использовать `file://` ссылку или полный путь:
 
 ```bash
 inherit /home/me/my-templates/rust-lib
 ```
 
-## Commands Reference
+## Справочник Команд
 
-### `generate` – The Main Event
+### `generate` – Главное Событие
 
-**Syntax:** `inherit <template> [to <directory>]`
+**Синтаксис:** `inherit <template> [to <directory>]`
 
-- `template` – can be:
-  - `user/repo` (GitHub shorthand)
-  - full URL (`https://...`, `file://...`, or absolute path)
-  - an alias (see below)
-- `directory` – where to create the project (defaults to current directory)
+- `template` – может быть:
+  - `user/repo` (скращение для GitHub)
+  - полный URL (`https://...`, `file://...`, или полный путь)
+  - псевдоним (см. ниже)
+- `directory` – где создать сам проект (по умолчанию текущая рабочая директория)
 
-**Example:**
+**Пример:**
 
 ```bash
 inherit alice/awesome-template to my-app
 ```
 
-If `alice/awesome-template` requires variables like `PROJECT_NAME` and `AUTHOR`, you’ll be prompted interactively. Values from your config’s `[defaults]` table are offered as suggestions.
+Если `alice/awesome-template` требует переменные по типу `PROJECT_NAME` и `AUTHOR`, Вас спросят интерактивно. Значения из Вашей таблицы `[defaults]` будут предложены как подсказки (Enter для применения).
 
-### `alias` – Shorten Your Favourite Templates
+### `alias` – Дайте Любимым Шаблонам Удобные Имена
 
-| Command | Description |
+| Команда | Описание |
 |---------|-------------|
-| `inherit <template> to alias <name>` | Create an alias for a template |
-| `inherit alias list` | Show all aliases |
-| `inherit alias remove <name>` | Delete an alias |
+| `inherit <template> to alias <name>` | Создать псевдоним для шаблона |
+| `inherit alias list` | Показать все псевдонимы |
+| `inherit alias remove <name>` | Удалить псевдоним |
 
-**Example:**
+**Пример:**
 
 ```bash
-# Add alias
+# Добавить псевдоним
 inherit rust-lib/cargo-lib to alias rlib
 
-# Use it later
+# Использовать его позднее
 inherit rlib to new-project
 
-# See all aliases
+# Посмотреть все псевдонимы
 inherit alias list
 
-# Remove it
+# Удалить псевдоним
 inherit alias remove rlib
 ```
 
-Aliases are stored in your config file under `[aliases]`.
+Псевдонимы хранятся в Вашем конфигурационном файле в словаре `[aliases]`.
 
-### `default` – Pre‑set Variable Values
+### `default` – Предустановленные Значения Переменных
 
-| Command | Description |
+| Команда | Описание |
 |---------|-------------|
-| `inherit default for <VAR>` | Set a default value for a variable |
-| `inherit default list` | Show all defaults |
-| `inherit default unset <VAR>` | Remove a default |
+| `inherit default for <VAR>` | Установить значение по умолчанию для переменной |
+| `inherit default list` | Показать все значения по умолчанию |
+| `inherit default unset <VAR>` | Удалить значение по умолчанию |
 
-Defaults are used as the **initial suggestion** when the prompt appears. You can still override them by typing a different value.
+В качестве **первоначального варианта** при появлении запроса используются значения по умолчанию.
+Вы можете изменить их, введя другое значение.
 
-**Example:**
+**Пример:**
 
 ```bash
-# Set your name once
+# Установите своё имя единожды
 inherit default for AUTHOR
-# > prompts: "Default value for AUTHOR [Your Name <you@example.com>]:"
-# Type a new value or press Enter to keep the current one.
+# > спросит: "Default value for AUTHOR [Your Name <you@example.com>]:"
+# Введите новое значение или нажмите Enter, чтобы сохранить текущее.
 
-# Later, every template that asks for AUTHOR will suggest this value.
+# Впоследствии каждый шаблон, запрашивающий AUTHOR, будет предлагать это значение.
 ```
 
-Defaults are stored in `[defaults]` in the config file.
+Значения по умолчанию хранятся в словаре `[defaults]` Вашего конфигурационного файла.
 
-### `cache` – Manage Downloaded Templates
+### `cache` – Управляйте Скачанными Шаблонами
 
-| Command | Description |
+| Команда | Описание |
 |---------|-------------|
-| `inherit cache list` | Show cached templates and their disk usage |
-| `inherit cache clean` | Delete everything in the cache |
+| `inherit cache list` | Показать скешированные шаблоны и их потребление дискового пространства |
+| `inherit cache clean` | Уничтожить весь кеш |
 
-Templates are cached after the first clone. This speeds up subsequent generations and allows offline use. The cache directory is configurable (see below).
+После первого клонирования шаблоны кэшируются. Это ускоряет последующие генерации и позволяет
+использовать их в автономном режиме. Каталог кэша можно настроить (см. ниже).
 
-## Configuration File
+## Файл Конфигурации
 
-On first run, `cargo-inherit` creates a config file at:
+При первом запуске `cargo-inherit` создаёт конфигурационный файл по следующему пути:
 
 - **Linux / macOS:** `~/.config/inherit/config.toml`
 - **Windows:** `%APPDATA%\inherit\config.toml`
 
-You can override the location with the `INHERIT_CONFIG` environment variable.
+Вы можете переопределить местоположение с помощью переменной среды `INHERIT_CONFIG`.
 
-Here’s a full annotated example:
+Вот полный пример с пояснениями:
 
 ```toml
-# Default values for template variables.
-# When a template requires a variable listed here, its value is used as the
-# default suggestion — you can still override it via the interactive prompt.
+# Значения по умолчанию для переменных шаблона.
+# Если шаблон требует переменную, указанную здесь, ее значение используется в качестве
+# предложения по умолчанию — Вы все еще можете переопределить его через интерактивную подсказку.
 [defaults]
 AUTHOR = "Your Name <you@example.com>"
 VERSION = "0.1.0"
 
-# Short aliases for templates.
+# Псевдонимы для шаблонов
 [aliases]
 rlib = "rust-lib/cargo-lib"
 blog = "https://github.com/my/blog-template.git"
 
-# Directory used to cache downloaded templates.
-# Supports ~/ expansion.
+# Каталог, используемый для кэширования загруженных шаблонов.
+# Поддерживает расширение ~/.
 cache_dir = "~/.cache/inherit"
 
-# GitHub personal access token (for private repositories).
-# Must have "repo" scope.
+# Персональный токен доступа GitHub (для приватных репозиториев).
+# Должен иметь область действия "repo".
 github_token = "ghp_..."
 
-# Whether to automatically run `git init` in generated projects.
+# Следует ли автоматически запускать `git init` в сгенерированных проектах.
 init_git = true
 
-# Whether to execute `post_create` hooks defined by templates.
+# Следует ли выполнять хуки `post_create`, определенные шаблонами.
 run_hooks = true
 
-# Command to open the project after generation (e.g., "code", "nvim", "idea").
+# Команда для открытия проекта после генерации (например, "code", "nvim", "idea").
+# Например, я поставил сюда nvim, что весьма удобно: одной командой и проект создал,
+# и сразу же IDE открыл.
 open_with = "code"
 ```
 
-### Environment Variables
+### Переменные Окружения
 
-| Variable | Description |
+| Переменная | Описание |
 |----------|-------------|
-| `INHERIT_CONFIG` | Full path to config file (overrides default) |
-| `INHERIT_CACHE_DIR` | Directory for cached templates (overrides `cache_dir`) |
-| `INHERIT_NON_INTERACTIVE` | If set to `1`, never prompt – fails if defaults missing |
+| `INHERIT_CONFIG` | Полный путь к файлу конфигурации (переопределяет значение по умолчанию) |
+| `INHERIT_CACHE_DIR` | Каталог для кэшированных шаблонов (переопределяет `cache_dir`) |
+| `INHERIT_NON_INTERACTIVE` | Если установлено значение `1`, запрос никогда не будет выполняться — ошибка возникает, если отсутствуют значения по умолчанию. |
 
-Non‑interactive mode is useful in CI or scripts. Example:
+Неинтерактивный режим полезен в системах непрерывной интеграции или скриптах. Пример:
 
 ```bash
 INHERIT_NON_INTERACTIVE=1 inherit user/repo to output
 ```
 
-## How It Works Under the Hood
+## Как Это Работает Изнутри
 
-When you run `inherit user/repo`:
+Когда Вы запускаете `inherit user/repo`:
 
-1. **Resolve** – `user/repo` is transformed into a Git URL (`https://github.com/user/repo.git`) unless it’s an alias or a full URL.
-2. **Fetch** – `git clone --depth 1` is used to download the template into the cache (keyed by the canonical URL). Subsequent runs reuse the cached copy.
-3. **Load** – `inherit-core` reads `Inherit.toml` and scans all files for `@VAR@` placeholders, respecting `.inherignore`.
-4. **Prompt** – For every variable found, the CLI shows a prompt with its description (from `[variables]`) and your configured default (from `[defaults]`).
-5. **Process** – All files and folders are copied to the target directory, with `@VAR@` replaced in **both contents and filenames**. Binary files are copied unchanged.
-6. **Finalise** – If `init_git = true`, a fresh `git init` is run in the target. Then any `post_create` hooks from the template are executed (using `sh -c` on Unix, `cmd /C` on Windows).
-7. **Open** – If `open_with` is set, the CLI launches that command with the target directory as an argument.
+1. **Разрешение** – ``user/repo` преобразуется в URL-адрес Git (`https://github.com/user/repo.git`), если это не псевдоним или полный URL-адрес.
+2. **Получение** – Команда `git clone --depth 1` используется для загрузки шаблона в кэш (с указанием канонического URL). При последующих запусках используется кэшированная копия.
+3. **Загрузка** – `inherit-core` считывает `Inherit.toml` и сканирует все файлы на наличие заполнителей `@VAR@`, соблюдая при этом `.inherignore`.
+4. **Опрос** – Для каждой найденной переменной CLI отображает подсказку с ее описанием (из `[variables]`) и заданным значением по умолчанию (из `[defaults]`).
+5. **Обработка** – Все файлы и папки копируются в целевой каталог, при этом `@VAR@` заменяется **как в содержимом, так и в именах файлов**. Бинарные файлы копируются без изменений.
+6. **Финализация** – Если `init_git = true`, в целевом объекте выполняется новая инициализация `git init`. Затем выполняются все хуки `post_create` из шаблона (с использованием `sh -c` в Unix, `cmd /C` в Windows).
+7. **Открытие** – Если параметр `open_with` задан, интерфейс командной строки запускает эту команду, передавая целевой каталог в качестве аргумента.
 
-### Template Manifest (`Inherit.toml`)
+### Манифест Шаблона (`Inherit.toml`)
 
-Example for hypothetical `cargo-lib` template:
+Пример для гипотетического шаблона `cargo-lib`:
 
 ```toml
 [template]
@@ -217,12 +222,12 @@ DESCRIPTION = "Short description of the library"
 post_create = ["cargo fmt", "git add ."]
 ```
 
-- `[variables]` keys are the placeholders (without `@`). Their values are **descriptions** shown to the user.
-- `post_create` commands are run in the generated project directory.
+- `[variables]` ключи — это заполнители (без символа `@`); значения — это **описания**, отображаемые пользователю.
+- `post_create` команды, выполняющиеся в сгенерированном каталоге проекта.
 
-### The `.inherignore` File
+### Файл `.inherignore`
 
-Just like `.gitignore`, but for excluding files from the **template**. Example:
+Ровно такой же, как `.gitignore`, но исключает файлы из **шаблона**. Пример:
 
 ```
 target/
@@ -230,89 +235,96 @@ Cargo.lock
 .git/
 ```
 
-Any file or folder matching these patterns will **not** be copied into the new project. This keeps your template clean of build artifacts or tool‑specific clutter.
+Любой файл или папка, соответствующие этим шаблонам, **не** будут скопированы в новый проект. Это позволяет
+избежать появления артефактов сборки или специфичных для инструмента элементов в вашем шаблоне.
 
-## Advanced Topics
+## Расширенные Темы
 
-### Using Private GitHub Repositories
+### Использование Приватных Репозиториев GitHub
 
-Set `github_token` in your config. The token is inserted into the clone URL:
+Укажите параметр `github_token` в Вашем файле конфигурации. Токен будет добавлен в URL-адрес клонирования:
 
 ```
 https://<token>@github.com/user/repo.git
 ```
 
-Make sure your token has at least `repo` scope.
+Убедитесь, что Ваш токен имеет как минимум область действия `repo`.
 
-### Local Templates Without Git
+### Локальные Шаблоны без Git
 
-You can point directly to a directory:
+Вы можете указать непосредственно на каталог:
 
 ```bash
 inherit /absolute/path/to/template
 ```
 
-The tool will **not** try to clone it; it will use the directory as‑is. This is perfect for rapid iteration.
+Инструмент **не** будет пытаться клонировать его; он будет использовать каталог как есть.
+Это идеально подходит для быстрой итерации.
 
-### Caching Behaviour
+### Поведение Кеширования
 
-- Each template is cached under a **stable identifier** derived from its canonical URL.
-- `git clone --depth 1` is used to keep the cache small.
-- To update a cached template, delete it from the cache (`inherit cache clean` will nuke everything) or manually run `git pull` inside the cache directory.
+- Каждый шаблон кэшируется под **стабильным идентификатором**, полученным из его канонического URL-адреса.
+- Команда `git clone --depth 1` используется для поддержания небольшого размера кэша.
+- Чтобы обновить кэшированный шаблон, удалите его из кэша (команда `inherit cache clean` удалит все данные) или вручную выполните команду `git pull` в каталоге кэша.
 
-### Post‑Create Hooks Security
+### Безопасность Хуков После Создания
 
-Hooks are just shell commands. They run with the same privileges as the user. Use them responsibly – do not clone untrusted templates without reviewing their `Inherit.toml`.
+Хуки — это всего лишь команды оболочки. Они выполняются с теми же привилегиями, что и пользователь.
+Используйте их ответственно — не клонируйте ненадежные шаблоны, не проверив их файл `Inherit.toml`.
 
-## Troubleshooting
+## Поиск Неисправностей
 
-| Problem | Solution |
+| Проблема | Решение |
 |---------|----------|
-| `error: Manifest "..." not found` | The template directory is missing an `Inherit.toml` file. Every valid template must have one (even if empty). |
-| `error: The following required variables are missing: [...]` | You ran in non‑interactive mode without providing defaults for those variables. Either set them in `[defaults]` or run without `INHERIT_NON_INTERACTIVE`. |
-| `git clone failed` | Check your network, the repository URL, and your GitHub token if private. |
-| `cannot determine config directory` | `dirs` crate failed. Set `INHERIT_CONFIG` explicitly. |
-| `Invalid variable name` | Variable names must match `[A-Z][A-Z0-9_]*` (uppercase, underscore allowed). |
+| `error: Manifest "..." not found` | В каталоге шаблонов отсутствует файл `Inherit.toml`. Каждый допустимый шаблон должен его содержать (даже если он пустой). |
+| `error: The following required variables are missing: [...]` | Вы запустили программу в неинтерактивном режиме, не указав значения по умолчанию для этих переменных. Либо установите их в `[defaults]`, либо запустите программу без `INHERIT_NON_INTERACTIVE`. |
+| `git clone failed` | Проверьте свою сеть, URL-адрес репозитория и свой токен GitHub, если он закрыт. |
+| `cannot determine config directory` | Необходимо явно установить параметр `INHERIT_CONFIG`. |
+| `Invalid variable name` | Названия переменных должны соответствовать `[A-Z][A-Z0-9_]*` (допускаются заглавные буквы и нижнее подчеркивание). |
 
-## Putting It All Together – A Real‑World Workflow
+## Собираем Всё Воедино – Реальный Рабочий Процесс
 
-Imagine you maintain a company template for microservices:
+Представьте, что Вы используете корпоративный шаблон для микросервисов:
 
-1. **Write the template** in a repo `mycorp/microservice-template`.
-2. **Add aliases** for your team:
+1. **Создайте шаблон** в репозитории `mycorp/microservice-template`.
+2. **Добавьте псевдонимы** для вашей команды:
 
    ```bash
    inherit mycorp/microservice-template to alias mcsrv
    ```
 
-3. **Set company defaults**:
+3. **Установите параметры компании по умолчанию**:
 
    ```bash
    inherit default for AUTHOR
-   # -> type "Engineering Team <eng@mycorp.com>"
+   # -> напечатайте "Engineering Team <eng@mycorp.com>"
    inherit default for LICENSE
-   # -> type "MIT OR Apache-2.0"
+   # -> напечатайте "MIT OR Apache-2.0"
    ```
 
-4. **Generate a new service**:
+4. **Создайте новый сервис**:
 
    ```bash
    inherit mcsrv to payment-service
    ```
 
-   The tool will ask only for the *project‑specific* variables (e.g. `SERVICE_NAME`, `PORT`). The company defaults are already filled.
+   Инструмент запросит только *специфичные для проекта* переменные (например, `SERVICE_NAME`, `PORT`).
+   Настройки по умолчанию для компании уже заполнены.
 
-5. **Automatically open in VS Code** and run `cargo build` via a hook – your team is productive in seconds.
+5. **Автоматическое открытие в VS Code** и запуск `cargo build` через хук – Ваша команда начнет работу за считанные секунды.
 
-## Conclusion
+## Заключение
 
-`cargo-inherit` brings the power of templating to your terminal, with a focus on simplicity and reusability. Whether you’re scaffolding a personal blog, a microservice, or an entire monorepo, this tool will save you from tedious copy‑paste and search‑replace.
+`cargo-inherit` переносит возможности шаблонизации в Ваш терминал, уделяя особое внимание простоте и возможности
+повторного использования. Независимо от того, создаете ли Вы личный блог, микросервис или целый монорепозиторий,
+этот инструмент избавит Вас от утомительного копирования-вставки и поиска-замены.
 
-The CLI is the friendly face of the [`inherit-core`](./inherit-core.md) engine. Together they form a lightweight, Git‑native templating system that fits naturally into your development workflow.
+Интерфейс командной строки (CLI) — это дружелюбное лицо движка [`inherit-core`](./inherit-core.md). Вместе они
+образуют легковесную, нативную для Git систему шаблонов, которая органично вписывается в ваш рабочий процесс разработки.
 
-Give it a try – your future self will thank you.
+Попробуйте – в будущем Вы сами себе скажете спасибо.
 
-## Links
+## Ссылки
 
 [crates.io](https://crates.io/cargo-inherit)
 [docs.rs](https://docs.rs/cargo-inherit)

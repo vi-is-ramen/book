@@ -211,7 +211,7 @@ If you need logic, you can always combine it with Rust’s own control flow – 
 | Work with file paths | `replace_paths(vec![...])` |
 | Discover which variables are used | `scan::extract_vars("...")` |
 | Validate variable names | `valid::is_valid_var_name("...")` |
-| Stay dependency‑light (no `std`?) | Only uses `std` + `thiserror` (async optional) |
+| Stay dependency‑light | Only uses `std` + `thiserror` (async optional) |
 
 **kissreplace** is a small, focused tool – and that’s its superpower. Go ahead, sprinkle some `@VAR@` placeholders into your strings, and let this crate do the rest. Happy templating!
 

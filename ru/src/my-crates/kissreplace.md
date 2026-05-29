@@ -1,28 +1,30 @@
-# Kissreplace: A Minimalist Template Engine
+# Kissreplace: Минималистичный шаблонизатор
 
-Welcome to **kissreplace** – a tiny, no‑nonsense template engine that lives by the **KISS** (Keep It Simple, Stupid!) principle.  
-If you need to replace placeholders like `@VAR@` in strings, file paths, or whole collections, this crate does exactly that and
-nothing more. No complex DSLs, no runtime overhead you didn’t ask for - just plain, predictable substitution.
-
----
-
-## What it does?
-
-- Finds every occurrence of `@VAR@` in a string, where `VAR` follows a **simple naming rule** (letters, digits, underscore, and
-must start with a letter or underscore).
-- Replaces it with a value from a hash map (`HashMap<String, String>`).
-- Leaves invalid or missing variables untouched (e.g. `@123@`, `@var-name@` or `@UNKNOWN@` stay as they are).
-- Works on single strings, whole vectors (in‑place or by value), and file paths.
+Добро пожаловать в **kissreplace** – крошечный, без лишних сложностей шаблонизатор, который следует принципу **KISS** (Keep It
+Simple, Stupid! – Делай проще, дурак!). Если Вам нужно заменять заполнители вида `@VAR@` в строках, путях к файлам или целых
+коллекциях, этот крейт делает именно это и ничего больше. Никаких сложных DSL, никаких нежелательных накладных расходов во
+время выполнения – только простая, предсказуемая подстановка.
 
 ---
 
-## Add to your project
+## Что Он Делает?
+
+- Находит каждое вхождение `@VAR@` в строке, где `VAR` соответствует **простому правилу именования** (буквы, цифры, символ
+подчёркивания и должен начинаться с буквы или подчёркивания).
+- Заменяет его значением из хеш-карты (`HashMap<String, String>`).
+- Оставляет недопустимые или отсутствующие переменные нетронутыми (например, `@123@`, `@var-name@` или `@UNKNOWN@` остаются
+как есть).
+- Работает с отдельными строками, целыми векторами (на месте или по значению) и путями к файлам.
+
+---
+
+## Добавление в Ваш Проект
 
 ```shell
 cargo add kissreplace
 ```
 
-Optional async support (enables `tokio` as a dependency, useful when you need async I/O around replacement):
+Опциональная поддержка async (подключает `tokio` как зависимость, полезна, когда требуется асинхронный ввод-вывод для замены):
 
 ```toml
 cargo add kissreplace --features async
@@ -30,7 +32,7 @@ cargo add kissreplace --features async
 
 ---
 
-## Quick start
+## Быстрый старт
 
 ```rust
 use std::collections::HashMap;
@@ -43,31 +45,31 @@ vars.insert("PROJECT".to_string(), "kissreplace".to_string());
 let template = "Hello @NAME@, you're reading @PROJECT@ docs!";
 let result = vars.replace_str(template);
 println!("{}", result);
-// Output: Hello World, you're reading kissreplace docs!
+// Вывод: Hello World, you're reading kissreplace docs!
 ```
 
-Under the hood `Variables` is just a type alias for `HashMap<String, String>`, so you can build it any way you like.
+Под капотом `Variables` – это просто псевдоним типа для `HashMap<String, String>`, так что Вы можете создавать её любым удобным способом.
 
 ---
 
-## How replacement works
+## Как Работает Замена
 
-The function `replace_str` scans the input **from left to right**:
+Функция `replace_str` сканирует входные данные **слева направо**:
 
-1. Look for the next `'@'`.
-2. From that position, search forward for a closing `'@'`.
-3. Check if the text between them is a **valid variable name**.
-4. If yes – replace it with the value from the map (or leave `@VAR@` if missing).
-5. If not – treat the first `'@'` as a literal character and continue scanning.
+1. Ищет следующий символ `'@'`.
+2. Начиная с этой позиции, ищет вперед закрывающий `'@'`.
+3. Проверяет, является ли текст между ними **допустимым именем переменной**.
+4. Если да – заменяет его значением из карты (или оставляет `@VAR@`, если переменная отсутствует).
+5. Если нет – обрабатывает первый `'@'` как литеральный символ и продолжает сканирование.
 
-Because the scan is **single‑pass** and no recursive expansion is performed, nested‑looking variables
-like `@A@` where `A` maps to `"@B@"` are **not** expanded further – you get exactly one substitution per placeholder.
+Поскольку сканирование **однопроходное** и рекурсивное раскрытие не выполняется, переменные, выглядящие как вложенные,
+например `@A@`, где `A` указывает на `"@B@"`, **не** раскрываются далее – вы получаете ровно одну подстановку на заполнитель.
 
-### Valid variable names
+### Допустимые Имена Переменных
 
-- Must not be empty.
-- First character must be an ASCII letter (`a-z`, `A-Z`) or underscore `_`.
-- Following characters can be ASCII letters, digits (`0-9`), or underscore.
+- Не должны быть пустыми.
+- Первый символ должен быть буквой ASCII (`a-z`, `A-Z`) или подчёркиванием `_`.
+- Последующие символы могут быть буквами ASCII, цифрами (`0-9`) или подчёркиванием.
 
 ```rust
 use kissreplace::valid::is_valid_var_name;
@@ -80,18 +82,18 @@ assert!(!is_valid_var_name("with-dash"));
 
 ---
 
-## The `KissReplace` trait
+## Трейт `KissReplace`
 
-This trait is implemented for `Variables` (`HashMap<String, String>`) and gives you several convenience methods:
+Этот трейт реализован для `Variables` (`HashMap<String, String>`) и предоставляет несколько удобных методов:
 
-| Method | Description |
+| Метод | Описание |
 |--------|-------------|
-| `replace_str(&self, input: &str) -> String` | Core method – replaces placeholders in a single string. |
-| `replace(&self, sources: Vec<String>) -> Vec<String>` | Apply to every element of a vector, returning a new vector. |
-| `replace_mut(&self, sources: &mut Vec<String>)` | **In‑place** version – more allocation‑efficient. |
-| `replace_paths(&self, paths: Vec<PathBuf>) -> Vec<PathBuf>` | Works on file paths (converts to string, replaces, then back to `PathBuf`). |
+| `replace_str(&self, input: &str) -> String` | Основной метод – заменяет заполнители в одной строке. |
+| `replace(&self, sources: Vec<String>) -> Vec<String>` | Применяет замену к каждому элементу вектора, возвращая новый вектор. |
+| `replace_mut(&self, sources: &mut Vec<String>)` | **Версия на месте** – более эффективна по выделению памяти. |
+| `replace_paths(&self, paths: Vec<PathBuf>) -> Vec<PathBuf>` | Работает с путями к файлам (преобразует в строку, заменяет, затем обратно в `PathBuf`). |
 
-### Example: replacing many strings
+### Пример: Замена Многих Строк
 
 ```rust
 let vars = /* ... */;
@@ -100,10 +102,10 @@ let mut lines = vec![
     "version = @VERSION@".to_string(),
 ];
 vars.replace_mut(&mut lines);
-// lines now contains the replaced values
+// lines теперь содержит заменённые значения
 ```
 
-### Example: file paths
+### Пример: Пути к Файлам
 
 ```rust
 let vars = /* ... */;
@@ -116,9 +118,9 @@ let new_paths = vars.replace_paths(paths);
 
 ---
 
-## Scanning for variables
+## Сканирование Переменных
 
-If you only need to know **which variables** appear in a template (without replacing them), use `scan::extract_vars`:
+Если Вам нужно узнать только **какие переменные** встречаются в шаблоне (без их замены), используйте `scan::extract_vars`:
 
 ```rust
 use kissreplace::scan;
@@ -128,94 +130,98 @@ let vars = extract_vars(template);
 // vars = {"NAME", "PROJECT", "VERSION"}
 ```
 
-It returns a `HashSet<String>` of unique, valid variable names found. The scanning logic is exactly the same as in `replace_str`, so you can trust that the reported names would be replaced when you later call `replace_str`.
+Функция возвращает `HashSet<String>` уникальных допустимых имён переменных, найденных в тексте. Логика сканирования точно такая же, как в `replace_str`, поэтому можно доверять, что сообщённые имена будут заменены при последующем вызове `replace_str`.
 
 ---
 
-## Error handling
+## Обработка Ошибок
 
-The crate defines its own `KissReplaceError` enum. Currently two variants exist:
+Крейт определяет собственное перечисление `KissReplaceError`. В настоящее время существуют два варианта:
 
-- `InvalidVariableName(String)` – returned by functions that validate names (if you build your own validation logic).
-- `InvalidUtf8` – used when converting a `PathBuf` to a string fails (the path is not valid UTF‑8).
+- `InvalidVariableName(String)` – возвращается функциями, проверяющими имена (если Вы создаёте свою собственную логику проверки).
+- `InvalidUtf8` – используется, когда преобразование `PathBuf` в строку завершается неудачей (путь не является допустимым UTF‑8).
 
-Most replacement methods are infallible (they don’t return `Result`). Errors only appear if you explicitly call into the `valid` module or handle paths with non‑UTF‑8 components.
+Большинство методов замены не возвращают `Result` (они безошибочны). Ошибки появляются только если Вы явно вызываете функции из модуля `valid` или обрабатываете пути с не‑UTF‑8 компонентами.
 
 ```rust
 use kissreplace::{KissReplaceError, valid};
 
 if let Err(e) = some_validation_function("1invalid") {
-    println!("Error: {}", e);
+    println!("Ошибка: {}", e);
 }
 ```
 
 ---
 
-## Async feature
+## Async Возможность
 
-When you enable the `async` feature, the crate pulls in `tokio` as an optional dependency. The replacement logic itself is **synchronous** – this feature simply makes `tokio` available for your own async I/O tasks, for example:
+Когда Вы включаете возможность `async`, крейт подтягивает `tokio` как опциональную зависимость. Сама логика
+замены **синхронна** – эта возможность просто делает `tokio` доступным для ваших собственных асинхронных
+задач ввода-вывода, например:
 
-- Reading hundreds of template files concurrently with `tokio::fs`.
-- Replacing variables in each file, then writing the results.
+- Чтение сотен файлов шаблонов конкурентно с помощью `tokio::fs`.
+- Замена переменных в каждом файле и запись результатов.
 
-Nothing in `kissreplace` is `async` by itself, but the feature lets you keep your dependency list tidy if you’re already using `tokio`.
+Ничто в `kissreplace` само по себе не является `async`, но возможность позволяет содержать список
+зависимостей в порядке, если вы уже используете `tokio`.
 
 ---
 
-## Testing & edge cases
+## Тестирование и Краевые Случаи
 
-The crate comes with a thorough test suite. Here are some behaviours you can rely on:
+Крейт поставляется с тщательным набором тестов. Вот некоторые варианты поведения, на которые вы можете положиться:
 
-| Input | Variables | Output |
+| Входные данные | Переменные | Выходные данные |
 |-------|-----------|--------|
 | `"@NAME@ and @MISSING@"` | `NAME=Alice` | `"Alice and @MISSING@"` |
 | `"@@X@@"` | `X=Y` | `"@Y@"` |
-| `"@var-name@ and @123@"` | – | unchanged (invalid names) |
-| `"hello @X and @X@"` | `X=Y` | `"hello @X and Y"` (unclosed `@` left as literal) |
+| `"@var-name@ and @123@"` | – | без изменений (недопустимые имена) |
+| `"hello @X and @X@"` | `X=Y` | `"hello @X and Y"` (незакрытый `@` остаётся литералом) |
 | `"@A@@B@"` | `A=1, B=2` | `"12"` |
-| `"@A@"` | `A="@B@"`, `B=X` | `"@B@"` (no nested expansion) |
+| `"@A@"` | `A="@B@"`, `B=X` | `"@B@"` (нет вложенного раскрытия) |
 
-The **no‑nested‑expansion** rule is intentional – it keeps complexity low and avoids infinite loops.
-
----
-
-## Performance considerations
-
-- **Single pass** over the input – `O(n)` time.
-- `replace_mut` reuses the existing `Vec` capacity, reducing allocations when you process many strings.
-- The scanner for `extract_vars` also performs a single pass and uses a `HashSet` to store unique names.
-
-If you need to replace the same template hundreds of times with different variable sets, consider pre‑scanning for variable names and then doing replacements via `String::replace` or a manual loop – but for most use cases, calling `replace_str` directly is perfectly fine.
+Правило **отсутствия вложенного раскрытия** является намеренным – оно сохраняет низкую сложность и избегает бесконечных циклов.
 
 ---
 
-## Philosophy – why KISS?
+## Соображения Производительности
 
-Many template engines grow organically: conditionals, loops, filters, partials... and suddenly your “simple” templating is a full‑blown language. **kissreplace** deliberately stops at placeholder substitution. It’s ideal for:
+- **Однопроходное** сканирование входных данных – время `O(n)`.
+- `replace_mut` повторно использует существующую ёмкость `Vec`, уменьшая количество выделений памяти при обработке многих строк.
+- Сканер для `extract_vars` также выполняет однопроходное сканирование и использует `HashSet` для хранения уникальных имён.
 
-- Configuration file generation (e.g. `config.@ENV@.toml` -> `config.production.toml`)
-- Simple email or notification templates
-- Environment variable expansion in custom CLIs
-- Teaching the concept of templating without distractions
-
-If you need logic, you can always combine it with Rust’s own control flow – that keeps both the template syntax and your code simple.
+Если Вам нужно заменить один и тот же шаблон сотни раз с разными наборами переменных, рассмотрите предварительное сканирование имён переменных и последующую замену через `String::replace` или ручной цикл – но для большинства случаев использования прямой вызов `replace_str` вполне подходит.
 
 ---
 
-## Summary
+## Философия – Почему KISS?
 
-| What you want | How kissreplace helps |
+Многие шаблонизаторы разрастаются органически: условия, циклы, фильтры, подшаблоны... и внезапно ваш «простой» шаблонизатор становится полноценным языком. **kissreplace** намеренно останавливается на подстановке заполнителей. Он идеален для:
+
+- Генерации конфигурационных файлов (например, `config.@ENV@.toml` -> `config.production.toml`)
+- Простых шаблонов электронных писем или уведомлений
+- Раскрытия переменных окружения в пользовательских CLI
+- Обучения концепции шаблонизации без отвлекающих факторов
+
+Если вам нужна логика, вы всегда можете объединить его с собственными управляющими конструкциями Rust – это сохраняет простым как синтаксис шаблонов, так и ваш код.
+
+---
+
+## Резюме
+
+| Что Вы хотите | Как помогает kissreplace |
 |---------------|----------------------|
-| Replace `@VAR@` placeholders | `vars.replace_str("...")` |
-| Process many strings efficiently | `replace_mut(&mut vec)` |
-| Work with file paths | `replace_paths(vec![...])` |
-| Discover which variables are used | `scan::extract_vars("...")` |
-| Validate variable names | `valid::is_valid_var_name("...")` |
-| Stay dependency‑light (no `std`?) | Only uses `std` + `thiserror` (async optional) |
+| Заменить заполнители `@VAR@` | `vars.replace_str("...")` |
+| Эффективно обработать много строк | `replace_mut(&mut vec)` |
+| Работать с путями файлов | `replace_paths(vec![...])` |
+| Обнаружить, какие переменные используются | `scan::extract_vars("...")` |
+| Проверить допустимость имени переменной | `valid::is_valid_var_name("...")` |
+| Оставаться лёгким в плане зависимостей | Использует только `std` + `thiserror` (async опционально) |
 
-**kissreplace** is a small, focused tool – and that’s its superpower. Go ahead, sprinkle some `@VAR@` placeholders into your strings, and let this crate do the rest. Happy templating!
+**kissreplace** – это маленький, сфокусированный инструмент, и в этом его суперсила. Вперёд, добавьте немного заполнителей
+`@VAR@` в Ваши строки и позвольте этому крейту сделать всё остальное. Приятного шаблонизирования!
 
-## Links
+## Ссылки
 
 [crates.io](https://crates.io/kissreplace)
 [docs.rs](https://docs.rs/kissreplace)

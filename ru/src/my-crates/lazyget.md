@@ -1,61 +1,61 @@
-# Lazy Loading, Smart Caching: The `lazyget` Crate
+# Ленивая Загрузка, Умное Кэширование: Крейт `lazyget`
 
-Welcome to the `lazyget` guide! If you've ever found yourself re-downloading the same huge asset over and over,
-or copy-pasting fragile caching code between projects, you're in the right place.
+Добро пожаловать в руководство по `lazyget`! Если Вы когда-либо ловили себя на том, что снова и снова перекачиваете один и тот же огромный ресурс,
+или копируете-вставляете хрупкий код кэширования между проектами, Вы обратились по адресу.
 
-`lazyget` is a tiny but mighty Rust crate that solves a big problem: **how to fetch an artifact (file, binary,
-dataset – anything) once, cache it locally, and never worry about it again**.
+`lazyget` — это крошечный, но мощный крейт Rust, который решает большую проблему: **как получить артефакт (файл, двоичный файл,
+набор данных — что угодно) один раз, закэшировать его локально и больше никогда об этом не беспокоиться**.
 
-It does one thing and does it well: given a cache directory and an artifact identifier, it will either return
-the existing cached path, or run your custom fetch logic exactly once, store the result, and give you back the
-path – all with atomic updates and automatic cleanup on failure.
+Он делает одну вещь и делает её хорошо: учитывая каталог кэша и идентификатор артефакта, он либо вернёт существующий
+путь к кэшированному файлу, либо Выполнит вашу пользовательскую логику получения ровно один раз, сохранит результат и вернёт Вам
+путь – всё это с атомарными обновлениями и автоматической очисткой при сбое.
 
-Let's dive in.
+Давайте погрузимся.
 
-## What Problem Does `lazyget` Solve?
+## Какую Проблему Решает `lazyget`?
 
-Imagine you're writing a CLI tool that needs a large AI model file, a game engine that downloads asset packs,
-or a build script that pulls a specific toolchain. You want:
+Представьте, что Вы пишете инструмент командной строки, которому нужен большой файл AI-модели, игровой движок, который загружает наборы ресурсов,
+или сборочный скрипт, который подтягивает конкретный инструментарий. Вы хотите:
 
-- **No redundant downloads** – if the artifact is already on disk, just use it.
-- **No stale caches** – sometimes you *must* refresh the artifact.
-- **No half‑written files** – if the download fails, the old (or partial) version should never be used.
-- **No boilerplate** – you shouldn't have to write temp directory dances and error handling every time.
+- **Никаких избыточных загрузок** – если артефакт уже на диске, просто используйте его.
+- **Никакого устаревшего кэша** – иногда Вы *должны* обновить артефакт.
+- **Никаких наполовину записанных файлов** – если загрузка не удалась, старая (или частичная) версия никогда не должна использоваться.
+- **Никакого шаблонного кода** – Вы не должны каждый раз писать танцы с временными каталогами и обработку ошибок.
 
-`lazyget` handles all of that for you. You just tell it *how* to fetch the artifact (a closure or async
-function), and it takes care of the rest.
+`lazyget` обрабатывает всё это за вас. Вы просто указываете ему, *как* получить артефакт (замыкание или асинхронную
+функцию), а он позаботится об остальном.
 
-## Quick Start
+## Быстрый Старт
 
-Add `lazyget` to your `Cargo.toml`:
+Добавьте `lazyget` в ваши зависимости:
 
 ```shell
 cargo add lazyget
 ```
 
-If you need asynchronous support (using `tokio`), enable the `async` feature:
+Если Вам нужна асинхронная поддержка (с использованием `tokio`), включите возможность `async`:
 
 ```shell
 cargo add lazyget --features async
 ```
 
-### Synchronous Example
+### Синхронный Пример
 
 ```rust
 use lazyget::{fetch, make_id};
 use std::fs;
 use std::path::Path;
 
-// Where to store cached artifacts (here: system cache directory)
+// Где хранить кэшированные артефакты (здесь: системный каталог кэша)
 let cache_dir = dirs::cache_dir().unwrap().join("my-app");
 
-// A stable ID for your artifact – can be based on URL and commit hash
+// Стабильный ID для вашего артефакта – может осноВываться на URL и хеше коммита
 let id = make_id("https://github.com/example/model", Some("v1.2.3"));
 
 let artifact_path = fetch(&cache_dir, &id, |temp_dir: &Path| {
-    // This closure runs only when the artifact is NOT already cached.
-    // `temp_dir` is a scratch directory that will become the final cache location.
-    // Download or generate your artifact here:
+    // Это замыкание Выполняется, только если артефакт ЕЩЁ НЕ закэширован.
+    // `temp_dir` – это черновой каталог, который станет финальным расположением кэша.
+    // Загрузите или сгенерируйте ваш артефакт здесь:
     let response = ureq::get("https://example.com/model.bin").call()?;
     let mut reader = response.into_reader();
     let mut file = fs::File::create(temp_dir.join("model.bin"))?;
@@ -63,15 +63,15 @@ let artifact_path = fetch(&cache_dir, &id, |temp_dir: &Path| {
     Ok(())
 })?;
 
-println!("Artifact ready at: {}", artifact_path.display());
+println!("Артефакт готов по адресу: {}", artifact_path.display());
 ```
 
-If you run this twice, the closure runs only the first time. The second call immediately returns the
-cached path.
+Если Вы запустите это дважды, замыкание Выполнится только в перВый раз. Второй Вызов немедленно вернёт
+кэшированный путь.
 
-### Asynchronous Example (with `tokio`)
+### Асинхронный Пример (с `tokio`)
 
-Enable the `async` feature and use `async_fetch`:
+Включите возможность `async` и используйте `async_fetch`:
 
 ```rust
 use lazyget::async_fetch;
@@ -91,29 +91,29 @@ let artifact_path = async_fetch(&cache_dir, &id, |temp_dir| async move {
 }).await?;
 ```
 
-## Core Concepts
+## Основные Понятия
 
-### 1. Artifact Identifier
+### 1. Идентификатор Артефакта
 
-Every artifact is identified by a **directory name** under your cache root. The simplest way is to use a
-human-readable string:
+Каждый артефакт идентифицируется **именем каталога** внутри вашего корня кэша. Самый простой способ — использовать
+человекочитаемую строку:
 
 ```rust
 let id = "my-cool-model-v2";
 ```
 
-But you can also generate a deterministic hash from a URL and an optional tag (like a Git commit) using
+Но Вы также можете сгенерировать детерминированный хеш из URL и опционального тега (например, коммита Git) с помощью
 `make_id`:
 
 ```rust
 let id = make_id("https://github.com/example/repo", Some("abc123def"));
-// => "a6b4c3e2..."  (64 hex characters)
+// => "a6b4c3e2..."  (64 шестнадцатеричных символа)
 ```
 
-`make_id` computes a SHA‑256 of `url` + `":"` + `tag` (if tag is `Some`). This is perfect when your
-artifact's source changes over time and you want to invalidate the cache automatically.
+`make_id` Вычисляет SHA‑256 от `url` + `":"` + `tag` (если тег `Some`). Это идеально, когда источник вашего
+артефакта меняется со временем, и Вы хотите автоматически инвалидировать кэш.
 
-### 2. `fetch` / `async_fetch` – The Lazy Workhorse
+### 2. `fetch` / `async_fetch` – Ленивая Рабочая Лошадка
 
 ```rust
 fn fetch<P, F>(cache_dir: P, artifact_id: &str, fetch_fn: F) -> Result<PathBuf>
@@ -122,69 +122,69 @@ where
     F: FnOnce(&Path) -> Result<(), Box<dyn Error + Send + Sync>>,
 ```
 
-**Behaviour**:
+**Поведение**:
 
-- Check if `cache_dir/artifact_id` exists.
-- If yes → return its path immediately.
-- If no:
-  - Create a temporary directory `.artifact_id-tmp` inside `cache_dir`.
-  - Call `fetch_fn` with that temp directory.
-  - If `fetch_fn` succeeds → atomically rename temp dir to the final name.
-  - If `fetch_fn` fails → delete the temp directory and propagate the error.
+- Проверить, существует ли `cache_dir/artifact_id`.
+- Если да -> немедленно вернуть его путь.
+- Если нет:
+  - Создать временный каталог `.artifact_id-tmp` внутри `cache_dir`.
+  - Вызвать `fetch_fn` с этим временным каталогом.
+  - Если `fetch_fn` успешен -> атомарно переименовать временный каталог в финальное имя.
+  - Если `fetch_fn` завершается ошибкой -> удалить временный каталог и распространить ошибку.
 
-This guarantees that you never see a partially written or corrupted artifact.
+Это гарантирует, что Вы никогда не увидите частично записанный или повреждённый артефакт.
 
-### 3. `refetch` / `async_refetch` – Force Refresh
+### 3. `refetch` / `async_refetch` – Принудительное Обновление
 
-Sometimes you want to ignore the existing cache and re‑fetch the artifact, even
-if it's present. That's what `refetch` is for:
+Иногда Вы хотите игнорировать существующий кэш и получить артефакт заново, даже
+если он присутствует. Именно для этого предназначен `refetch`:
 
 ```rust
 fn refetch<P, F>(cache_dir: P, artifact_id: &str, fetch_fn: F) -> Result<PathBuf>
 ```
 
-It deletes the existing cached directory (if any) and then calls `fetch` internally.
+Он удаляет существующий кэшированный каталог (если есть), а затем внутренне Вызывает `fetch`.
 
-## Error Handling
+## Обработка Ошибок
 
-All fallible operations return a `Result<T, LazyGetError>`. `LazyGetError`
-is a `thiserror` enum covering:
+Все операции, которые могут завершиться неудачей, возвращают `Result<T, LazyGetError>`. `LazyGetError`
+— это перечисление `thiserror`, охватывающее:
 
-- `Io` – I/O errors (file system).
-- `Fetch` – Your own closure returned an error (wrapped in a boxed trait object).
-- `CacheCreate` – Failed to create the root cache directory.
-- `AtomicRename` – The final rename step failed (very rare, but possible on some filesystems).
+- `Io` – ошибки ввода-Вывода (файловая система).
+- `Fetch` – ваше собственное замыкание вернуло ошибку (обёрнуто в трейт-объект `Box`).
+- `CacheCreate` – не удалось создать корневой каталог кэша.
+- `AtomicRename` – финальный шаг переименования не удался (очень редко, но возможно на некоторых файлоВых системах).
 
-This means you can pattern‑match to handle specific cases or use `?` to bubble errors up.
+Это означает, что Вы можете использовать сопоставление с образцом для обработки конкретных случаев или использовать `?`, чтобы пробросить ошибки наверх.
 
 ```rust
 use lazyget::{LazyGetError, fetch};
 
 match fetch(cache_dir, "my-id", |dir| Ok(())) {
-    Ok(path) => println!("Got {}", path.display()),
-    Err(LazyGetError::Fetch(e)) => eprintln!("Download logic failed: {}", e),
-    Err(e) => eprintln!("Caching system error: {}", e),
+    Ok(path) => println!("Получен {}", path.display()),
+    Err(LazyGetError::Fetch(e)) => eprintln!("Логика загрузки не удалась: {}", e),
+    Err(e) => eprintln!("Ошибка системы кэширования: {}", e),
 }
 ```
 
-## Under the Hood: How Atomic Caching Works
+## Под Капотом: Как Работает Атомарное Кэширование
 
-`lazyget` follows a simple but robust protocol:
+`lazyget` следует простому, но надёжному протоколу:
 
-1. **Check existence** – If `target_dir` exists, we’re done.
-2. **Prepare temp** – `cache_dir/.artifact_id-tmp`. If it already exists from a previous
-interrupted run, it gets deleted.
-3. **Run your fetch** – You write files into the temp directory. If you need to download
-multiple files or unpack an archive, do it there.
-4. **Commit** – `std::fs::rename` (or `tokio::fs::rename`). On most filesystems this is
-atomic – either the rename happens or it doesn’t. No reader will ever see an incomplete directory.
-5. **Cleanup** – If your closure returns an error, the temp directory is removed automatically.
+1. **Проверка существования** – Если `target_dir` существует, мы закончили.
+2. **Подготовка временного каталога** – `cache_dir/.artifact_id-tmp`. Если он уже существует от предыдущего
+прерванного запуска, он удаляется.
+3. **Выполнение вашей загрузки** – Вы записываете файлы во временный каталог. Если Вам нужно загрузить
+несколько файлов или распаковать архив, делайте это там.
+4. **Фиксация** – `std::fs::rename` (или `tokio::fs::rename`). На большинстве файлоВых систем это
+атомарно – либо переименование происходит, либо нет. Ни один читатель никогда не увидит неполный каталог.
+5. **Очистка** – Если ваше замыкание возвращает ошибку, временный каталог удаляется автоматически.
 
-This approach works on Linux, macOS, and Windows.
+Этот подход работает на Linux, macOS и Windows.
 
-## Complete Example: Downloading a Zip Archive
+## Полный Пример: Загрузка Zip-Архива
 
-Here’s a real‑world synchronous example that downloads a zip file, extracts it, and caches the result:
+Вот реальный синхронный пример, который загружает zip-файл, извлекает его и кэширует результат:
 
 ```rust,no_run
 use lazyget::{fetch, make_id, LazyGetError};
@@ -194,12 +194,12 @@ use std::path::Path;
 use zip::ZipArchive;
 
 fn fetch_and_extract(temp_dir: &Path) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    // Download zip
+    // Загрузка zip
     let mut resp = ureq::get("https://example.com/assets.zip").call()?;
     let mut bytes = Vec::new();
     resp.into_reader().read_to_end(&mut bytes)?;
 
-    // Unzip into temp_dir
+    // Распаковка в temp_dir
     let mut archive = ZipArchive::new(Cursor::new(bytes))?;
     for i in 0..archive.len() {
         let mut file = archive.by_index(i)?;
@@ -217,16 +217,15 @@ fn fetch_and_extract(temp_dir: &Path) -> Result<(), Box<dyn std::error::Error + 
 let cache_dir = std::env::temp_dir().join("my-cache");
 let id = make_id("https://example.com/assets.zip", Some("v2"));
 let path = fetch(&cache_dir, &id, fetch_and_extract)?;
-println!("Assets ready at: {}", path.display());
+println!("Ресурсы готоВы по адресу: {}", path.display());
 ```
 
-## Testing Strategies
+## Стратегии Тестирования
 
-`lazyget` is easy to test because you can provide any `FnOnce` – including one that counts
-how many times it was called. The crate itself uses `tempfile::tempdir()` to
-create temporary cache roots for tests.
+`lazyget` легко тестировать, потому что Вы можете передать любой `FnOnce` – в том числе тот, который подсчитывает,
+сколько раз он был Вызван. Сам крейт использует `tempfile::tempdir()` для создания временных корней кэша для тестов.
 
-Example test pattern:
+Пример шаблона тестирования:
 
 ```rust
 #[test]
@@ -235,39 +234,39 @@ fn test_caching_behaviour() {
     let id = "test-id";
     let mut counter = 0;
 
-    // First call: runs closure
+    // ПерВый Вызов: Выполняет замыкание
     let _ = fetch(tmp.path(), id, |_dir| { counter += 1; Ok(()) }).unwrap();
     assert_eq!(counter, 1);
 
-    // Second call: uses cache
+    // Второй Вызов: использует кэш
     let _ = fetch(tmp.path(), id, |_dir| { counter += 1; Ok(()) }).unwrap();
     assert_eq!(counter, 1);
 }
 ```
 
-## Feature Flags
+## Возможности (`feature flags`)
 
-- **default** – no extra features.
-- **async** – enables the `tokio` dependency and provides `async_fetch` / `async_refetch`.
-You get `tokio::fs` and `tokio::process`, but the runtime is not started automatically –
-you need a Tokio runtime in your application.
+- **default** – никаких дополнительных возможностей.
+- **async** – добавляет зависимость `tokio` и предоставляет `async_fetch` / `async_refetch`.
+Вы получаете `tokio::fs` и `tokio::process`, но среда Выполнения не запускается автоматически –
+Вам нужна среда Выполнения Tokio в вашем приложении.
 
-## When Not to Use `lazyget`
+## Когда не следует использовать `lazyget`
 
-- You need to cache very large numbers of tiny files (the per‑artifact directory overhead
-is minimal, but if you have millions, consider a database).
-- You are writing a `no_std` environment (this crate uses `std` heavily).
+- Вам нужно кэшировать очень большое количество крошечных файлов (накладные расходы на каталог артефакта
+минимальны, но если у вас миллионы файлов, рассмотрите базу данных).
+- Вы пишете для окружения `no_std` (этот крейт интенсивно использует `std`).
 
-## Conclusion
+## Заключение
 
-`lazyget` gives you bulletproof, atomic, lazy caching with an API that fits in your head.
-It’s the kind of crate that disappears into your code – you only notice it when it works perfectly.
+`lazyget` предоставляет Вам надёжное, атомарное, ленивое кэширование с API, которое умещается в голове.
+Это такой крейт, который исчезает в вашем коде – Вы замечаете его только тогда, когда он работает идеально.
 
-Go ahead, stop re‑downloading that 2 GB model file on every CI run, and let `lazyget` take the wheel.
+Вперёд, перестаньте перекачивать тот 2-гигабайтный файл модели при каждом запуске CI и позвольте `lazyget` взять управление на себя.
 
-*Happy lazy fetching!*
+*Трудолюбивой загрузки!*
 
-## Links
+## Ссылки
 
 [crates.io](https://crates.io/lazyget)
 [docs.rs](https://docs.rs/lazyget)

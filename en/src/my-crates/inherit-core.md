@@ -70,7 +70,7 @@ All fallible operations return `Result<T, InheritError>`. The error enum disting
 - Missing variables (`MissingVariables`)
 - IO and command failures
 
-```rust,ignore
+```rust
 pub enum InheritError {
     Io(#[from] std::io::Error),
     ManifestNotFound(PathBuf),
@@ -157,12 +157,12 @@ This is the real workhorse. It:
 - **Creates** the target directory.
 - **Walks** the source, respecting always‑ignored and `.inherignore` entries.
 - For each file:
-  - If it’s a directory → create it in the target (after replacing placeholders in its name).
+  - If it’s a directory -> create it in the target (after replacing placeholders in its name).
   - If it’s a file:
-    - Try to read as UTF‑8 → replace placeholders in the **content**, write as text.
-    - On failure (binary file) → copy byte‑for‑byte (no replacement).
-- If `opts.init_git` is true → runs `git init -q` in the target.
-- If `opts.run_hooks` is true → executes each `post_create` command in order.
+    - Try to read as UTF‑8 -> replace placeholders in the **content**, write as text.
+    - On failure (binary file) -> copy byte‑for‑byte (no replacement).
+- If `opts.init_git` is true -> runs `git init -q` in the target.
+- If `opts.run_hooks` is true -> executes each `post_create` command in order.
 
 The function returns counts of processed text files and copied binary files.
 

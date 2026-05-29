@@ -1,76 +1,78 @@
-# The Engine Behind Inherit Templates: inherit-core
+# Движок, Лежащий В Основе Inherit: inherit-core
 
-Welcome to the core library that powers [`Inherit`](https://crates.io/crates/cargo-inherit)!
-If you’ve ever wished for a simple, Git‑friendly way to stamp out project templates with
-dynamic placeholders, you’re in the right place. `inherit-core` does all the heavy lifting:
-scanning files, replacing variables, respecting `.inherignore` rules, and even running
-post‑creation hooks.
+Добро пожаловать в основную библиотеку, которая обеспечивает работу [`Inherit`](https://crates.io/crates/cargo-inherit)!
+Если Вы когда-либо хотели иметь простой, дружественный к Git способ штамповать шаблоны проектов с динамическими
+заполнителями, Вы обратились по адресу. `inherit-core` выполняет всю тяжёлую работу:
+сканирование файлов, замену переменных, соблюдение правил `.inherignore` и даже запуск
+хуков после создания.
 
-In this chapter we’ll explore the library’s design, how to use it programmatically, and peek
-under the hood at its main components.
+В этой главе мы рассмотрим дизайн библиотеки, способы её программного использования и заглянем
+под капот её основных компонентов.
 
-## What Problem Does It Solve?
+## Какую Проблему Решает Библиотека?
 
-Copy‑pasting a template project leads to stale copies, inconsistent naming, and tedious
-search‑and‑replace. A better approach:
+Копирование-вставка шаблонного проекта приводит к устаревшим копиям, несогласованным именованиям и утомительному
+поиску-и-замене. Лучший подход:
 
-- Keep a **source template** with placeholders like `@PROJECT_NAME@`.
-- Let the tool **scan** the template to discover which variables are needed.
-- Ask the user (or a script) for concrete values.
-- **Generate** a new project with all placeholders replaced – including file names and
-folder names!
+- Хранить **исходный шаблон** с заполнителями, такими как `@PROJECT_NAME@`.
+- Позволить инструменту **сканировать** шаблон, чтобы обнаружить, какие переменные необходимы.
+- Спросить пользователя (или скрипт) о конкретных значениях.
+- **Сгенерировать** новый проект, во всех заполнителях будет произведена замена – включая имена файлов и
+имена папок!
 
-`inherit-core` implements exactly that pipeline, while being completely agnostic about the
-user interface. The CLI tool `cargo-inherit` uses it to ask questions interactively, but
-you could also drive it from a build script or a GUI.
+`inherit-core` реализует именно этот конвейер, оставаясь полностью независимым от пользовательского
+интерфейса. Инструмент командной строки `cargo-inherit` использует его для интерактивного опроса,
+но Вы также можете управлять им из сборочного скрипта или графического интерфейса.
 
-## Core Concepts
+## Основные понятия
 
-| Concept | Description |
+| Понятие | Описание |
 |---------|-------------|
-| **Template** | A directory containing an `Inherit.toml` manifest and arbitrary files with `@VAR@` placeholders. |
-| **Manifest** | TOML file that declares variables (with descriptions) and optional hooks. |
-| **Placeholder syntax** | `@UPPER_SNAKE_CASE@` – powered by the [`kissreplace`] crate. |
-| **`.inherignore`** | Git‑ignore style file to exclude certain paths from processing. |
-| **Post‑create hooks** | Shell commands (sh or cmd) run after the project is materialised. |
+| **Шаблон** | Каталог, содержащий манифест `Inherit.toml` и произвольные файлы с заполнителями `@VAR@`. |
+| **Манифест** | TOML-файл, объявляющий переменные (с описаниями) и опциональные хуки. |
+| **Синтаксис заполнителей** | `@UPPER_SNAKE_CASE@` – реализован с помощью крейта [`kissreplace`]. |
+| **`.inherignore`** | Файл в стиле .gitignore для исключения определённых путей из обработки. |
+| **Хуки после создания** | Команды оболочки (sh или cmd), выполняемые после материализации проекта. |
 
-> **Note:** `inherit-core` does **not** prompt the user for missing variables. That’s the
-> caller’sresponsibility. The library only validates that all required variables are
-> supplied and non‑empty.
+> **Примечание:** `inherit-core` **не** запрашивает у пользователя отсутствующие переменные. Это
+> ответственность вызывающего кода. Библиотека только проверяет, что все требуемые переменные
+> предоставлены и не пусты.
 
-## A Bird’s‑Eye View of the Pipeline
+## Общий взгляд на конвейер
 
 ```
 +-------------+        +---------------------+        +--------------+
-|  Template   |------->│    load_template    |------->|   Context    |
-|  Directory  |        │  (scan + manifest)  |        | (vars + desc)|
+|  Шаблон     |------->│    load_template    |------->|   Контекст   |
+|  Каталог    |        │  (сканирование +    |        | (переменные  |
+|             |        │   манифест)         |        |  + описания) |
 +-------------+        +---------------------+        +------+-------+
                                                              |
                                                              V
 +--------------+       +------------------+           +--------------+
-| Final Values |------>| process_template |---------->|  New Project |
-| (Variables)  |       |  (replace, copy) |           |  Directory   |
-+--------------+       +------------------+           +--------------+
+| Финальные    |------>| process_template |---------->|  Новый       |
+| значения     |       |  (замена, копие) |           |  проект      |
+| (Переменные) |       +------------------+           |  Каталог     |
++--------------+                                      +--------------+
 ```
 
-1. **Load** – Read `Inherit.toml` and scan all template files to collect every `@VAR@` occurrence.
-2. **Prompt** (outside the crate) – The caller collects concrete values from the user.
-3. **Process** – Copy every file/folder, replacing placeholders in **content** and
-**path names**, respecting `.inherignore`.
-4. **Finalise** – Optionally run `git init` and execute `post_create` hooks.
+1. **Загрузка** – Чтение `Inherit.toml` и сканирование всех файлов шаблона для сбора каждого вхождения `@VAR@`.
+2. **Запрос** (вне крейта) – Вызывающий код собирает конкретные значения от пользователя.
+3. **Обработка** – Копирование каждого файла/папки с заменой заполнителей в **содержимом** и
+**путях**, с учётом `.inherignore`.
+4. **Завершение** – Опционально запускает `git init` и выполняет хуки `post_create`.
 
-## The Modules in Detail
+## Модули в деталях
 
-### `error.rs` – Clear, actionable errors
+### `error.rs` – Чёткие, пригодные для действия ошибки
 
-All fallible operations return `Result<T, InheritError>`. The error enum distinguishes between:
+Все операции, которые могут завершиться неудачей, возвращают `Result<T, InheritError>`. Перечисление ошибок различает:
 
-- Missing manifest (`ManifestNotFound`)
-- Parse failures (`ManifestParse`)
-- Missing variables (`MissingVariables`)
-- IO and command failures
+- Отсутствие манифеста (`ManifestNotFound`)
+- Ошибки разбора (`ManifestParse`)
+- Отсутствующие переменные (`MissingVariables`)
+- Ошибки ввода-вывода и выполнения команд
 
-```rust,ignore
+```rust
 pub enum InheritError {
     Io(#[from] std::io::Error),
     ManifestNotFound(PathBuf),
@@ -82,93 +84,93 @@ pub enum InheritError {
 }
 ```
 
-### `manifest.rs` – The template’s configuration
+### `manifest.rs` – Конфигурация шаблона
 
-Deserialises `Inherit.toml` with three optional sections:
+Десериализует `Inherit.toml` с тремя опциональными секциями:
 
 ```toml
 [template]
 name = "cargo-lib"
-description = "Minimal Rust library template"
+description = "Минимальный шаблон библиотеки Rust"
 
 [variables]
-PROJECT_NAME = "Name of the project"
-AUTHOR = "Author name and email"
+PROJECT_NAME = "Имя проекта"
+AUTHOR = "Имя и email автора"
 
 [hooks]
-post_create = ["cargo fmt", "echo 'Done!'"]
+post_create = ["cargo fmt", "echo 'Готово!'"]
 ```
 
-The `variables` map serves two purposes:
+Карта `variables` служит двум целям:
 
-- It **defines** which variables the template expects
-(extra variables found in files are also required).
-- The string value is a **description** (shown to the user when prompting).
+- Она **определяет**, какие переменные ожидает шаблон
+(дополнительные переменные, найденные в файлах, также становятся обязательными).
+- Строковое значение является **описанием** (показывается пользователю при запросе).
 
-> `#[serde(default)]` makes every field optional – a template can have no manifest at
-> all (though you’d lose descriptions and hooks).
+> `#[serde(default)]` делает каждое поле опциональным – шаблон может вообще не иметь манифеста
+> (хотя тогда вы потеряете описания и хуки).
 
-### `ignore.rs` – What to skip
+### `ignore.rs` – Что пропускать
 
-`inherit-core` respects two layers of ignoring:
+`inherit-core` учитывает два уровня игнорирования:
 
-1. **Always ignored** – `"Inherit.toml"`, `".inherignore"`, `".git"` (and anything inside `.git/`).
-2. **User‑defined** – via a `.inherignore` file in the template root, using `.gitignore` syntax.
+1. **Всегда игнорируется** – `"Inherit.toml"`, `".inherignore"`, `".git"` (и всё внутри `.git/`).
+2. **Определяется пользователем** – через файл `.inherignore` в корне шаблона, с синтаксисом `.gitignore`.
 
 ```rust
 let ignore = InheritIgnore::load(template_dir);
 if ignore.is_ignored(relative_path, is_dir) {
-    continue; // skip this file/folder
+    continue; // пропустить этот файл/папку
 }
 ```
 
-You can exclude build artifacts, lock files, or any generated content that shouldn’t be copied into new projects.
+Вы можете исключать артефакты сборки, lock-файлы или любой генерируемый контент, который не должен копироваться в новые проекты.
 
-### `scanner.rs` – Discovering variables
+### `scanner.rs` – Обнаружение переменных
 
-The scanner walks the template directory (respecting ignores) and reads every text file.
-It uses `kissreplace::scan::extract_vars` to find all `@...@` placeholders.
-The result is a `HashSet<String>` of **required variable names**.
+Сканер обходит каталог шаблона (с учётом игнорирования) и читает каждый текстовый файл.
+Он использует `kissreplace::scan::extract_vars` для поиска всех заполнителей вида `@...@`.
+Результатом является `HashSet<String>` **имён обязательных переменных**.
 
-Why scan? Because a template author might forget to list a variable in `[variables]`.
-The scanner ensures nothing is missed – the union of manifest‑declared and scanned
-variables becomes the final required set.
+Зачем сканировать? Потому что автор шаблона может забыть перечислить переменную в `[variables]`.
+Сканер гарантирует, что ничего не пропущено – объединение объявленных в манифесте и найденных сканером
+переменных становится финальным обязательным набором.
 
-### `pipeline.rs` – The heart of the operation
+### `pipeline.rs` – Сердце операции
 
-Two public functions drive everything:
+Две публичные функции управляют всем процессом:
 
 #### `load_template(source_dir: &Path) -> Result<TemplateContext>`
 
-Returns a `TemplateContext` containing:
+Возвращает `TemplateContext`, содержащий:
 
-- The parsed `Manifest`
-- `required_vars` – all variables that must eventually be provided
-- `var_descriptions` – descriptions from the manifest (empty string if not declared)
+- Разобранный `Manifest`
+- `required_vars` – все переменные, которые должны быть в итоге предоставлены
+- `var_descriptions` – описания из манифеста (пустая строка, если не объявлено)
 
-You’d call this first to show the user a list of what they need to fill in.
+Вы вызываете эту функцию первой, чтобы показать пользователю список того, что ему нужно заполнить.
 
 #### `process_template(source_dir, target_dir, final_vars, opts) -> Result<ProcessResult>`
 
-This is the real workhorse. It:
+Это настоящая рабочая лошадка. Она:
 
-- **Validates** variable names (must be `^[A-Z][A-Z0-9_]*$` – by `kissreplace`’s rules).
-- **Checks** that all required variables are present and **non‑empty**.
-- **Creates** the target directory.
-- **Walks** the source, respecting always‑ignored and `.inherignore` entries.
-- For each file:
-  - If it’s a directory → create it in the target (after replacing placeholders in its name).
-  - If it’s a file:
-    - Try to read as UTF‑8 → replace placeholders in the **content**, write as text.
-    - On failure (binary file) → copy byte‑for‑byte (no replacement).
-- If `opts.init_git` is true → runs `git init -q` in the target.
-- If `opts.run_hooks` is true → executes each `post_create` command in order.
+- **Проверяет** имена переменных (должны соответствовать `^[A-Z][A-Z0-9_]*$` – по правилам `kissreplace`).
+- **Проверяет**, что все необходимые переменные присутствуют и **не пусты**.
+- **Создаёт** целевой каталог.
+- **Обходит** исходный каталог, соблюдая всегда игнорируемые и записи из `.inherignore`.
+- Для каждого файла:
+  - Если это каталог -> создать его в целевом каталоге (после замены заполнителей в его имени).
+  - Если это файл:
+    - Попытаться прочитать как UTF‑8 -> заменить заполнители в **содержимом**, записать как текст.
+    - При ошибке (двоичный файл) -> скопировать побайтово (без замены).
+- Если `opts.init_git` равно true -> запускает `git init -q` в целевом каталоге.
+- Если `opts.run_hooks` равно true -> выполняет каждую команду `post_create` по порядку.
 
-The function returns counts of processed text files and copied binary files.
+Функция возвращает количество обработанных текстовых файлов и скопированных двоичных файлов.
 
-## Putting It All Together – A Complete Example
+## Собираем всё вместе – полный пример
 
-Let’s simulate what the CLI would do. We’ll use the built‑in `cargo-lib` example template.
+Давайте смоделируем, что сделал бы инструмент командной строки. Мы будем использовать гипотетический пример шаблона `cargo-lib`.
 
 ```rust
 use inherit_core::{load_template, process_template, ProcessOptions, Variables};
@@ -178,18 +180,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let template_dir = "./examples/cargo-lib";
     let target_dir = "./my-new-lib";
 
-    // 1. Load template to know what variables are needed
+    // 1. Загружаем шаблон, чтобы узнать, какие переменные нужны
     let ctx = load_template(template_dir.as_ref())?;
-    println!("Required variables: {:?}", ctx.required_vars);
+    println!("Необходимые переменные: {:?}", ctx.required_vars);
 
-    // 2. Collect values (normally you'd ask the user)
+    // 2. Собираем значения (обычно Вы спросили бы пользователя)
     let mut vars = Variables::new();
     vars.insert("PROJECT_NAME".into(), "my_awesome_lib".into());
     vars.insert("AUTHOR".into(), "Jane Doe <jane@example.com>".into());
     vars.insert("VERSION".into(), "0.1.0".into());
-    vars.insert("DESCRIPTION".into(), "Does something cool".into());
+    vars.insert("DESCRIPTION".into(), "Делает что-то крутое".into());
 
-    // 3. Process the template
+    // 3. Обрабатываем шаблон
     let opts = ProcessOptions::default(); // init_git = true, run_hooks = true
     let result = process_template(
         template_dir.as_ref(),
@@ -198,10 +200,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         opts,
     )?;
 
-    println!("Generated {} text files, {} binary files", 
+    println!("Сгенерировано {} текстовых файлов, {} двоичных файлов", 
              result.processed_files, result.binary_files);
 
-    // Check that placeholders are gone
+    // Проверяем, что заполнители исчезли
     let cargo_toml = fs::read_to_string(target_dir.join("Cargo.toml"))?;
     assert!(!cargo_toml.contains('@'));
 
@@ -209,94 +211,94 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-When you run this, the target directory will contain a fresh Rust library
-project with `name = "my_awesome_lib"` and a `.git` folder
-(because `init_git` defaulted to `true`).
+Когда Вы запустите этот код, целевой каталог будет содержать свежий проект библиотеки Rust
+с `name = "my_awesome_lib"` и папкой `.git`
+(потому что `init_git` по умолчанию равен `true`).
 
-## Advanced Features
+## Продвинутые возможности
 
-### Placeholders in File and Folder Names
+### Заполнители в именах файлов и папок
 
-The replacement isn’t limited to file contents – it also applies to **paths**.
-This template file:
+Замена не ограничивается содержимым файлов – она также применяется к **путям**.
+Этот файл шаблона:
 
 ```
 src/@PROJECT_NAME@/mod.rs
 ```
 
-will be created as `src/my_awesome_lib/mod.rs`. Very useful for language‑specific
-layouts (e.g. Python packages, Java namespaces).
+будет создан как `src/my_awesome_lib/mod.rs`. Очень полезно для языко-специфичных
+структур (например, пакетов Python, пространств имён Java).
 
-### Binary Files are Copied Unchanged
+### Двоичные файлы копируются без изменений
 
-If a file cannot be read as UTF‑8, `inherit-core` assumes it’s binary and performs
-a byte‑wise copy. No placeholder replacement happens, so your images or
-compiled assets stay intact.
+Если файл не может быть прочитан как UTF‑8, `inherit-core` считает его двоичным и выполняет
+побайтовое копирование. Замена заполнителей не производится, поэтому ваши изображения или
+скомпилированные ресурсы остаются нетронутыми.
 
-### Post‑Create Hooks on Windows and Unix
+### Хуки после создания на Windows и Unix
 
-The `hooks.post_create` commands are executed using:
+Команды `hooks.post_create` выполняются с использованием:
 
-- `sh -c "command"` on Unix
-- `cmd /C "command"` on Windows
+- `sh -c "команда"` на Unix
+- `cmd /C "команда"` на Windows
 
-This gives you maximum portability. A typical hook might run `cargo fmt`, `git add .`, or `npm install`.
+Это даёт максимальную переносимость. Типичный хук может запускать `cargo fmt`, `git add .` или `npm install`.
 
-## Error Handling in Practice
+## Обработка ошибок на практике
 
-The CLI tool uses `InheritError` to produce user‑friendly messages. For example:
+Инструмент командной строки использует `InheritError` для вывода понятных пользователю сообщений. Например:
 
-- **MissingVariables** – prints the list of variables the user forgot to provide.
-- **CommandFailed** – shows which hook failed and its exit status.
-- **ManifestNotFound** – suggests maybe the path isn’t a valid template directory.
+- **MissingVariables** – выводит список переменных, которые пользователь забыл предоставить.
+- **CommandFailed** – показывает, какой хук завершился ошибкой, и его код выхода.
+- **ManifestNotFound** – предполагает, что путь, возможно, не является действительным каталогом шаблона.
 
-Because every error implements `std::error::Error`, you can use `anyhow` or `thiserror` in your own wrapper.
+Поскольку каждая ошибка реализует `std::error::Error`, вы можете использовать `anyhow` или `thiserror` в своей собственной обёртке.
 
-## Testing Strategy
+## Стратегия тестирования
 
-The crate includes integration tests that:
+Крейт включает интеграционные тесты, которые:
 
-- Run the `cargo-lib` example template end‑to‑end.
-- Verify missing variables trigger the right error.
-- Test variable replacement inside file names (the `test_variable_in_filename` case).
+- Запускают пример шаблона `cargo-lib` от начала до конца.
+- Проверяют, что отсутствующие переменные вызывают правильную ошибку.
+- Тестируют замену переменных внутри имён файлов (случай `test_variable_in_filename`).
 
-These tests use `tempfile::tempdir()` to avoid polluting the source tree. They also disable
-`init_git` and hooks to keep tests fast and deterministic.
+Эти тесты используют `tempfile::tempdir()` для избежания загрязнения дерева исходных кодов. Они также отключают
+`init_git` и хуки, чтобы тесты оставались быстрыми и детерминированными.
 
-## Why `kissreplace`?
+## Почему `kissreplace`?
 
-The placeholder engine was deliberately kept tiny and fast. [`kissreplace`] provides:
+Движок заполнителей намеренно сделан крошечным и быстрым. [`kissreplace`](./kissreplace.md) предоставляет:
 
-- **Scanning** – extract all `@VAR@` names from a string.
-- **Replacement** – efficient, single‑pass substitution.
+- **Сканирование** – извлечение всех имён `@VAR@` из строки.
+- **Замену** – эффективную, однопроходную подстановку.
 
-Its “kiss” philosophy aligns perfectly with `inherit-core`: no regex magic, no accidental
-partial replacements, just clear semantics.
+Его философия «kiss» идеально соответствует `inherit-core`: никакой магии регулярных выражений, никаких случайных
+частичных замен, только чёткая семантика.
 
-## When to Use `inherit-core` Directly
+## Когда использовать `inherit-core` напрямую
 
-You might bypass the `cargo-inherit` CLI if you want to:
+Вы можете обойти `cargo-inherit` CLI, если хотите:
 
-- Integrate templating into a larger build system (e.g. a workspace generator).
-- Provide a different user interface – a TUI, a web form, or environment‑variable driven generation.
-- Automate template instantiation in CI/CD pipelines.
+- Интегрировать шаблонизацию в большую сборочную систему (например, генератор рабочего пространства).
+- Предоставить другой пользовательский интерфейс – TUI, веб-форму или генерацию, управляемую переменными окружения.
+- Автоматизировать создание экземпляров шаблонов в конвейерах CI/CD.
 
-Simply add `inherit-core` as a dependency, and you get the entire templating engine without any interactive baggage.
+Просто добавьте `inherit-core` как зависимость, и вы получите весь механизм шаблонизации без интерактивной нагрузки.
 
 ```shell
 cargo add inherit-core
 ```
 
-## Conclusion
+## Заключение
 
-`inherit-core` is a focused, well‑tested library that turns any directory into a **reusable, parameterised template**.
-It respects ignore files, replaces placeholders everywhere (even in paths), and runs hooks to finalise the generated
-project. Whether you’re building the official `cargo-inherit` tool or your own bespoke generator, this crate gives
-you a solid foundation – and keeps the magic behind `@YOUR_VARIABLES@`.
+`inherit-core` – это целенаправленная, хорошо протестированная библиотека, которая превращает любой каталог в **повторно**
+**используемый параметризованный шаблон**. Она учитывает файлы игнорирования, заменяет заполнители везде (даже в путях)
+и запускает хуки для финализации сгенерированного проекта. Строите ли Вы официальный инструмент `cargo-inherit` или свой
+собственный генератор, этот крейт даёт Вам прочную основу – и сохраняет магию за `@YOUR_VARIABLES@`.
 
-Now go ahead, create some templates, and let `inherit-core` do the repetitive work for you!
+А теперь вперёд, создавайте шаблоны и позвольте `inherit-core` делать за Вас повторяющуюся работу!
 
-## Links
+## Ссылки
 
 [crates.io](https://crates.io/inherit-core)
 [docs.rs](https://docs.rs/inherit-core)
