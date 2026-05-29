@@ -4,14 +4,21 @@ default:
 build:
     @rm -rf book; \
      mkdir book; \
+     \
      cd en; \
      mdbook build; \
-     cd ..; cd ru; \
+     cd ..; \
+     \
+     cd ru; \
      mdbook build; \
      cd ..; \
+     \
      cp index.html book/; \
-     mkdir book/{en,ru}; \
+     \
+     mkdir book/en; \
      cp -r en/book/* book/en; \
+     \
+     mkdir book/ru; \
      cp -r ru/book/* book/ru
 
 b: build
