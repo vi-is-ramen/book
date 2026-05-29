@@ -15,10 +15,10 @@ build:
      \
      cp index.html book/; \
      \
-     mkdir book/en; \
+     mkdir -p book/en; \
      cp -r en/book/* book/en; \
      \
-     mkdir book/ru; \
+     mkdir -p book/ru; \
      cp -r ru/book/* book/ru
 
 b: build
