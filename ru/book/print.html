@@ -1,0 +1,1656 @@
+<!DOCTYPE HTML>
+<html lang="ru" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Зэ Книга</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-f4c48c4d.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-1e0d70f1.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Зэ Книга</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="вступление"><a class="header" href="#вступление">Вступление</a></h1>
+<p>Добро пожаловать в мою цифровую мастерскую.</p>
+<p>Вы наткнулись на живую коллекцию кода, идей и экспериментов — отчасти документацию,
+отчасти дневник разработчика, и в целом отражение того, что заставляет
+меня возиться с кодом допоздна.</p>
+<p>Меня зовут <strong>Иван Четчасов</strong>. Я пишу системы на Rust, для удовольствия разрабатываю
+языки программирования и иногда спорю с компиляторами о проверке заимствований. В этой
+книге я собрал плоды этого труда: библиотеки, утилиты и все остальное, что возникает
+на стыке любопытства и кофеина.</p>
+<h2 id="что-вы-здесь-найдёте"><a class="header" href="#что-вы-здесь-найдёте">Что Вы Здесь Найдёте?</a></h2>
+<p>Это не руководство по одному продукту. Это <strong>мастерская</strong> — каждая глава самодостаточна, но
+вместе они демонстрируют последовательную философию:</p>
+<ul>
+<li><strong>Практичность превыше всего</strong> – Если это не решает реальную проблему, этому здесь не место.</li>
+<li><strong>Образовательный аспект возник случайно</strong> – я пишу читаемый код и объясняю, почему всё работает именно так.</li>
+<li><strong>Эксперименты без всяких извинений</strong> — Некоторые проекты готовы к производству; другие — это
+эксперименты. И те, и другие ценны.</li>
+</ul>
+<p>Вот лишь небольшой фрагмент того, что уже есть внутри (и что ещё появится):</p>
+<h3 id="экосистема-inherit"><a class="header" href="#экосистема-inherit">Экосистема <code>inherit</code></a></h3>
+<p>Система шаблонов Git, которая превращает любой репозиторий в генератор многократно используемых проектов.
+Больше никаких операций копирования-вставки-поиска-замены. Просто <code>cargo inherit user/template to my-project</code>.</p>
+<ul>
+<li><code>inherit-core</code> – движок, который сканирует, заменяет и учитывает <code>.inherignore</code>.</li>
+<li><code>cargo-inherit</code> – интерфейс командной строки, добавляющий псевдонимы, значения по
+умолчанию, кэширование и интерактивные подсказки.</li>
+</ul>
+<p><a href="#cargo-inherit--cli-для-inherit">&gt; Больше</a></p>
+<h3 id="диалект-rust-рабочее-название-dust"><a class="header" href="#диалект-rust-рабочее-название-dust">Диалект Rust (Рабочее Название: “Dust”)</a></h3>
+<p>Пока что это секрет ;P</p>
+<h3 id="утилитарные-крейты"><a class="header" href="#утилитарные-крейты">Утилитарные крейты</a></h3>
+<ul>
+<li><code>kissreplace</code> – Простая замена заполнителя (сканирование, замена, проверка)</li>
+<li><code>lazyget</code> – Ленивое скачивание с кэшированием</li>
+<li><code>inherit-core</code> и <code>cargo-inherit</code> (упомянуты выше)</li>
+<li>И ещё много того, что я напишу и опубликую здесь</li>
+</ul>
+<p><a href="#kissreplace-минималистичный-шаблонизатор">&gt; Больше про kissreplace</a>
+<a href="#ленивая-загрузка-умное-кэширование-крейт-lazyget">&gt; Больше про lazyget</a></p>
+<h3 id="блог-подобные-посты"><a class="header" href="#блог-подобные-посты">Блог-подобные посты</a></h3>
+<p>Время от времени я буду публиковать главы, которая не будет содержать много кода, но будет посвящена следующим темам:</p>
+<ul>
+<li>«Почему я трижды переписывал код сканера шаблонов»</li>
+<li>«Уроки, извлеченные из создания небольшой библиотеки графического интерфейса пользователя»</li>
+<li>«Прелести и трудности создания собственного синтаксиса, похожего на Rust»</li>
+</ul>
+<p>Представьте это как технический блог, встроенный в книгу.</p>
+<h2 id="как-это-читать"><a class="header" href="#как-это-читать">Как Это Читать?</a></h2>
+<p>Главы расположены примерно по возрастному признаку:</p>
+<ul>
+<li><strong>Готовые ✅</strong> – <code>inherit-core</code>, <code>cargo-inherit</code> (полнофункциональные руководства для существующих крейтов).</li>
+<li><strong>В процессе ⏳</strong> – Вы уже можете это прочитать, но в них могут содержаться дезинформация или опечатки.</li>
+<li><strong>Экспериментальные ⚠️</strong> – главы не для широкой аудитории.</li>
+<li><strong>Блог ❤️</strong> – Случайные мысли и посмертные разборы.</li>
+</ul>
+<p>Вы можете сразу перейти к любой главе. Боковая панель навигации — ваш лучший помощник.</p>
+<h2 id="контакты-и-вклад"><a class="header" href="#контакты-и-вклад">Контакты и Вклад</a></h2>
+<p>Мне очень приятно получать отзывы от читателей — будь то сообщение об ошибке, вопрос или просто «эй, это мне помогло».</p>
+<ul>
+<li><strong>Email</strong>: <a href="mailto:vi.is.chapmann@gmail.com">vi.is.chapmann@gmail.com</a></li>
+<li><strong>Telegram</strong>: <a href="https://t.me/viqxq">@viqxq</a></li>
+<li><strong>WhatsApp</strong>: <a href="https://wa.me/79933533292">+7(993)3533292</a></li>
+</ul>
+<p>Если вы обнаружите опечатку, неработающую ссылку или фрагмент кода, который не компилируется, пожалуйста, сообщите мне об этом.
+А ещё лучше — создайте запрос на слияние в <a href="https://github.com/viraven/book">репозитории GitHub, посвящённом этой книге</a>.</p>
+<h2 id="заметка-про-иван-четчасов"><a class="header" href="#заметка-про-иван-четчасов">Заметка про «Иван Четчасов»</a></h2>
+<p>Да, это моё настоящее имя. Да, оно длинное. Можете называть меня <strong>Иван</strong> или <strong>Ви</strong> — я отзываюсь на оба имени. Адрес электронной почты <code>vi.is.chapmann</code> — это небольшая дань уважения моему прошлому.</p>
+<h2 id="готовы"><a class="header" href="#готовы">Готовы?</a></h2>
+<p>Давайте сделаем что-то интересное.</p>
+<blockquote>
+<p>«Лучший способ предсказать будущее — реализовать его»
+— Алан Кей (ну типа)</p>
+</blockquote>
+<p>Перейдите к следующей главе или выберите то, что вам понравится. Код ждет вас.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="мои-крейты"><a class="header" href="#мои-крейты">Мои Крейты</a></h1>
+<p>В этой части книги описаны мои крейты. Руководства и документация: все, что Вам нужно
+для использования моих крейтов. Документация также охватывает очень маленькие крейты:
+надеюсь, ни у кого не возникнет лишних вопросов.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cargo-inherit--cli-для-inherit"><a class="header" href="#cargo-inherit--cli-для-inherit"><code>cargo-inherit</code> – CLI Для Inherit</a></h1>
+<p>Добро пожаловать в <code>cargo-inherit</code> — инструмент командной строки, который превращает
+любой репозиторий Git в многоразовый, настраиваемый шаблон проекта. Если Вы когда-либо
+копировали шаблонный проект, а затем вручную заменяли все заполнители, этот инструмент
+для Вас.</p>
+<p><code>cargo-inherit</code> — это тонкая, но мощная обертка над <a href="#движок-лежащий-в-основе-inherit-inherit-core"><code>inherit-core</code></a>.
+Она добавляет:</p>
+<ul>
+<li><strong>Обнаружение шаблонов</strong> – из GitHub или любой Git ссылки.</li>
+<li><strong>Псевдонимы</strong> – короткие имена для длинных путей к шаблонам.</li>
+<li><strong>Значения по умолчанию</strong> – предварительно заполняемые переменные, такие как <code>AUTHOR</code>.</li>
+<li><strong>Умное кеширование</strong> – клонированные шаблоны сохраняются для повышения скорости.</li>
+<li><strong>Интерактивные запросы</strong> – запросы для недостающих переменных с удобными значениями по умолчанию для повышения скорости.</li>
+<li><strong>Хуки после создания</strong> – запуск команд оболочки после создания проекта.
+(напр. <code>cargo fmt</code>, <code>git add .</code>)</li>
+<li><strong>Файл конфигурации</strong> – храните свои секреты и предпочтения в безопасности.</li>
+</ul>
+<p>Давайте погружаться!</p>
+<h2 id="установка"><a class="header" href="#установка">Установка</a></h2>
+<p><code>cargo-inherit</code> - это бинарный файл Rust. Установите его из crates.io:</p>
+<pre><code class="language-bash">cargo install cargo-inherit
+</code></pre>
+<p>Убедитесь, что <code>~/.cargo/bin</code> присутствует в Вашей переменной <code>PATH</code>. После установки, команда будет <code>cargo inherit</code>.</p>
+<blockquote>
+<p><strong>Замечание:</strong> бинарник называется <code>cargo-inherit</code>, но в примерах в этой статьи будет писаться просто <code>inherit</code> для краткости. На практике Вы сможете запускать <code>cargo inherit</code>.</p>
+</blockquote>
+<h2 id="быстрый-старт"><a class="header" href="#быстрый-старт">Быстрый Старт</a></h2>
+<p>Создание новой Rust-библиотеки из гипотетического шаблона <code>cargo-lib</code>:</p>
+<pre><code class="language-bash">inherit rust-lib/cargo-lib to my-project
+</code></pre>
+<p>Inherit:</p>
+<ol>
+<li>Склонирует <code>https://github.com/rust-lib/cargo-lib</code> (и закеширует для последующего использования).</li>
+<li>Прочитает <code>Inherit.toml</code> и просканирует файлы для <code>@ПЕРЕМЕННЫХ@</code>.</li>
+<li>Спросит у Вас значения (с полезными описаниями и значениями по умолчанию).</li>
+<li>Сгенерирует <code>my-project/</code>, заменив все плейсхолдеры.</li>
+<li>Запустит <code>git init</code> и выполнит <code>post_create</code> хуки.</li>
+</ol>
+<p>Если у Вас есть локальная папка с шаблоном, Вы можете использовать <code>file://</code> ссылку или полный путь:</p>
+<pre><code class="language-bash">inherit /home/me/my-templates/rust-lib
+</code></pre>
+<h2 id="справочник-команд"><a class="header" href="#справочник-команд">Справочник Команд</a></h2>
+<h3 id="generate--главное-событие"><a class="header" href="#generate--главное-событие"><code>generate</code> – Главное Событие</a></h3>
+<p><strong>Синтаксис:</strong> <code>inherit &lt;template&gt; [to &lt;directory&gt;]</code></p>
+<ul>
+<li><code>template</code> – может быть:
+<ul>
+<li><code>user/repo</code> (скращение для GitHub)</li>
+<li>полный URL (<code>https://...</code>, <code>file://...</code>, или полный путь)</li>
+<li>псевдоним (см. ниже)</li>
+</ul>
+</li>
+<li><code>directory</code> – где создать сам проект (по умолчанию текущая рабочая директория)</li>
+</ul>
+<p><strong>Пример:</strong></p>
+<pre><code class="language-bash">inherit alice/awesome-template to my-app
+</code></pre>
+<p>Если <code>alice/awesome-template</code> требует переменные по типу <code>PROJECT_NAME</code> и <code>AUTHOR</code>, Вас спросят интерактивно. Значения из Вашей таблицы <code>[defaults]</code> будут предложены как подсказки (Enter для применения).</p>
+<h3 id="alias--дайте-любимым-шаблонам-удобные-имена"><a class="header" href="#alias--дайте-любимым-шаблонам-удобные-имена"><code>alias</code> – Дайте Любимым Шаблонам Удобные Имена</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Команда</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>inherit &lt;template&gt; to alias &lt;name&gt;</code></td><td>Создать псевдоним для шаблона</td></tr>
+<tr><td><code>inherit alias list</code></td><td>Показать все псевдонимы</td></tr>
+<tr><td><code>inherit alias remove &lt;name&gt;</code></td><td>Удалить псевдоним</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Пример:</strong></p>
+<pre><code class="language-bash"># Добавить псевдоним
+inherit rust-lib/cargo-lib to alias rlib
+
+# Использовать его позднее
+inherit rlib to new-project
+
+# Посмотреть все псевдонимы
+inherit alias list
+
+# Удалить псевдоним
+inherit alias remove rlib
+</code></pre>
+<p>Псевдонимы хранятся в Вашем конфигурационном файле в словаре <code>[aliases]</code>.</p>
+<h3 id="default--предустановленные-значения-переменных"><a class="header" href="#default--предустановленные-значения-переменных"><code>default</code> – Предустановленные Значения Переменных</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Команда</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>inherit default for &lt;VAR&gt;</code></td><td>Установить значение по умолчанию для переменной</td></tr>
+<tr><td><code>inherit default list</code></td><td>Показать все значения по умолчанию</td></tr>
+<tr><td><code>inherit default unset &lt;VAR&gt;</code></td><td>Удалить значение по умолчанию</td></tr>
+</tbody>
+</table>
+</div>
+<p>В качестве <strong>первоначального варианта</strong> при появлении запроса используются значения по умолчанию.
+Вы можете изменить их, введя другое значение.</p>
+<p><strong>Пример:</strong></p>
+<pre><code class="language-bash"># Установите своё имя единожды
+inherit default for AUTHOR
+# &gt; спросит: "Default value for AUTHOR [Your Name &lt;you@example.com&gt;]:"
+# Введите новое значение или нажмите Enter, чтобы сохранить текущее.
+
+# Впоследствии каждый шаблон, запрашивающий AUTHOR, будет предлагать это значение.
+</code></pre>
+<p>Значения по умолчанию хранятся в словаре <code>[defaults]</code> Вашего конфигурационного файла.</p>
+<h3 id="cache--управляйте-скачанными-шаблонами"><a class="header" href="#cache--управляйте-скачанными-шаблонами"><code>cache</code> – Управляйте Скачанными Шаблонами</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Команда</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>inherit cache list</code></td><td>Показать скешированные шаблоны и их потребление дискового пространства</td></tr>
+<tr><td><code>inherit cache clean</code></td><td>Уничтожить весь кеш</td></tr>
+</tbody>
+</table>
+</div>
+<p>После первого клонирования шаблоны кэшируются. Это ускоряет последующие генерации и позволяет
+использовать их в автономном режиме. Каталог кэша можно настроить (см. ниже).</p>
+<h2 id="файл-конфигурации"><a class="header" href="#файл-конфигурации">Файл Конфигурации</a></h2>
+<p>При первом запуске <code>cargo-inherit</code> создаёт конфигурационный файл по следующему пути:</p>
+<ul>
+<li><strong>Linux / macOS:</strong> <code>~/.config/inherit/config.toml</code></li>
+<li><strong>Windows:</strong> <code>%APPDATA%\inherit\config.toml</code></li>
+</ul>
+<p>Вы можете переопределить местоположение с помощью переменной среды <code>INHERIT_CONFIG</code>.</p>
+<p>Вот полный пример с пояснениями:</p>
+<pre><code class="language-toml"># Значения по умолчанию для переменных шаблона.
+# Если шаблон требует переменную, указанную здесь, ее значение используется в качестве
+# предложения по умолчанию — Вы все еще можете переопределить его через интерактивную подсказку.
+[defaults]
+AUTHOR = "Your Name &lt;you@example.com&gt;"
+VERSION = "0.1.0"
+
+# Псевдонимы для шаблонов
+[aliases]
+rlib = "rust-lib/cargo-lib"
+blog = "https://github.com/my/blog-template.git"
+
+# Каталог, используемый для кэширования загруженных шаблонов.
+# Поддерживает расширение ~/.
+cache_dir = "~/.cache/inherit"
+
+# Персональный токен доступа GitHub (для приватных репозиториев).
+# Должен иметь область действия "repo".
+github_token = "ghp_..."
+
+# Следует ли автоматически запускать `git init` в сгенерированных проектах.
+init_git = true
+
+# Следует ли выполнять хуки `post_create`, определенные шаблонами.
+run_hooks = true
+
+# Команда для открытия проекта после генерации (например, "code", "nvim", "idea").
+# Например, я поставил сюда nvim, что весьма удобно: одной командой и проект создал,
+# и сразу же IDE открыл.
+open_with = "code"
+</code></pre>
+<h3 id="переменные-окружения"><a class="header" href="#переменные-окружения">Переменные Окружения</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Переменная</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>INHERIT_CONFIG</code></td><td>Полный путь к файлу конфигурации (переопределяет значение по умолчанию)</td></tr>
+<tr><td><code>INHERIT_CACHE_DIR</code></td><td>Каталог для кэшированных шаблонов (переопределяет <code>cache_dir</code>)</td></tr>
+<tr><td><code>INHERIT_NON_INTERACTIVE</code></td><td>Если установлено значение <code>1</code>, запрос никогда не будет выполняться — ошибка возникает, если отсутствуют значения по умолчанию.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Неинтерактивный режим полезен в системах непрерывной интеграции или скриптах. Пример:</p>
+<pre><code class="language-bash">INHERIT_NON_INTERACTIVE=1 inherit user/repo to output
+</code></pre>
+<h2 id="как-это-работает-изнутри"><a class="header" href="#как-это-работает-изнутри">Как Это Работает Изнутри</a></h2>
+<p>Когда Вы запускаете <code>inherit user/repo</code>:</p>
+<ol>
+<li><strong>Разрешение</strong> – ``user/repo<code> преобразуется в URL-адрес Git (</code>https://github.com/user/repo.git`), если это не псевдоним или полный URL-адрес.</li>
+<li><strong>Получение</strong> – Команда <code>git clone --depth 1</code> используется для загрузки шаблона в кэш (с указанием канонического URL). При последующих запусках используется кэшированная копия.</li>
+<li><strong>Загрузка</strong> – <code>inherit-core</code> считывает <code>Inherit.toml</code> и сканирует все файлы на наличие заполнителей <code>@VAR@</code>, соблюдая при этом <code>.inherignore</code>.</li>
+<li><strong>Опрос</strong> – Для каждой найденной переменной CLI отображает подсказку с ее описанием (из <code>[variables]</code>) и заданным значением по умолчанию (из <code>[defaults]</code>).</li>
+<li><strong>Обработка</strong> – Все файлы и папки копируются в целевой каталог, при этом <code>@VAR@</code> заменяется <strong>как в содержимом, так и в именах файлов</strong>. Бинарные файлы копируются без изменений.</li>
+<li><strong>Финализация</strong> – Если <code>init_git = true</code>, в целевом объекте выполняется новая инициализация <code>git init</code>. Затем выполняются все хуки <code>post_create</code> из шаблона (с использованием <code>sh -c</code> в Unix, <code>cmd /C</code> в Windows).</li>
+<li><strong>Открытие</strong> – Если параметр <code>open_with</code> задан, интерфейс командной строки запускает эту команду, передавая целевой каталог в качестве аргумента.</li>
+</ol>
+<h3 id="манифест-шаблона-inherittoml"><a class="header" href="#манифест-шаблона-inherittoml">Манифест Шаблона (<code>Inherit.toml</code>)</a></h3>
+<p>Пример для гипотетического шаблона <code>cargo-lib</code>:</p>
+<pre><code class="language-toml">[template]
+name = "cargo-lib"
+description = "Minimal Rust library template"
+
+[variables]
+PROJECT_NAME = "Name of the project"
+AUTHOR = "Author name and email"
+VERSION = "Initial version"
+DESCRIPTION = "Short description of the library"
+
+[hooks]
+post_create = ["cargo fmt", "git add ."]
+</code></pre>
+<ul>
+<li><code>[variables]</code> ключи — это заполнители (без символа <code>@</code>); значения — это <strong>описания</strong>, отображаемые пользователю.</li>
+<li><code>post_create</code> команды, выполняющиеся в сгенерированном каталоге проекта.</li>
+</ul>
+<h3 id="файл-inherignore"><a class="header" href="#файл-inherignore">Файл <code>.inherignore</code></a></h3>
+<p>Ровно такой же, как <code>.gitignore</code>, но исключает файлы из <strong>шаблона</strong>. Пример:</p>
+<pre><code>target/
+Cargo.lock
+.git/
+</code></pre>
+<p>Любой файл или папка, соответствующие этим шаблонам, <strong>не</strong> будут скопированы в новый проект. Это позволяет
+избежать появления артефактов сборки или специфичных для инструмента элементов в вашем шаблоне.</p>
+<h2 id="расширенные-темы"><a class="header" href="#расширенные-темы">Расширенные Темы</a></h2>
+<h3 id="использование-приватных-репозиториев-github"><a class="header" href="#использование-приватных-репозиториев-github">Использование Приватных Репозиториев GitHub</a></h3>
+<p>Укажите параметр <code>github_token</code> в Вашем файле конфигурации. Токен будет добавлен в URL-адрес клонирования:</p>
+<pre><code>https://&lt;token&gt;@github.com/user/repo.git
+</code></pre>
+<p>Убедитесь, что Ваш токен имеет как минимум область действия <code>repo</code>.</p>
+<h3 id="локальные-шаблоны-без-git"><a class="header" href="#локальные-шаблоны-без-git">Локальные Шаблоны без Git</a></h3>
+<p>Вы можете указать непосредственно на каталог:</p>
+<pre><code class="language-bash">inherit /absolute/path/to/template
+</code></pre>
+<p>Инструмент <strong>не</strong> будет пытаться клонировать его; он будет использовать каталог как есть.
+Это идеально подходит для быстрой итерации.</p>
+<h3 id="поведение-кеширования"><a class="header" href="#поведение-кеширования">Поведение Кеширования</a></h3>
+<ul>
+<li>Каждый шаблон кэшируется под <strong>стабильным идентификатором</strong>, полученным из его канонического URL-адреса.</li>
+<li>Команда <code>git clone --depth 1</code> используется для поддержания небольшого размера кэша.</li>
+<li>Чтобы обновить кэшированный шаблон, удалите его из кэша (команда <code>inherit cache clean</code> удалит все данные) или вручную выполните команду <code>git pull</code> в каталоге кэша.</li>
+</ul>
+<h3 id="безопасность-хуков-после-создания"><a class="header" href="#безопасность-хуков-после-создания">Безопасность Хуков После Создания</a></h3>
+<p>Хуки — это всего лишь команды оболочки. Они выполняются с теми же привилегиями, что и пользователь.
+Используйте их ответственно — не клонируйте ненадежные шаблоны, не проверив их файл <code>Inherit.toml</code>.</p>
+<h2 id="поиск-неисправностей"><a class="header" href="#поиск-неисправностей">Поиск Неисправностей</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Проблема</th><th>Решение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>error: Manifest "..." not found</code></td><td>В каталоге шаблонов отсутствует файл <code>Inherit.toml</code>. Каждый допустимый шаблон должен его содержать (даже если он пустой).</td></tr>
+<tr><td><code>error: The following required variables are missing: [...]</code></td><td>Вы запустили программу в неинтерактивном режиме, не указав значения по умолчанию для этих переменных. Либо установите их в <code>[defaults]</code>, либо запустите программу без <code>INHERIT_NON_INTERACTIVE</code>.</td></tr>
+<tr><td><code>git clone failed</code></td><td>Проверьте свою сеть, URL-адрес репозитория и свой токен GitHub, если он закрыт.</td></tr>
+<tr><td><code>cannot determine config directory</code></td><td>Необходимо явно установить параметр <code>INHERIT_CONFIG</code>.</td></tr>
+<tr><td><code>Invalid variable name</code></td><td>Названия переменных должны соответствовать <code>[A-Z][A-Z0-9_]*</code> (допускаются заглавные буквы и нижнее подчеркивание).</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="собираем-всё-воедино--реальный-рабочий-процесс"><a class="header" href="#собираем-всё-воедино--реальный-рабочий-процесс">Собираем Всё Воедино – Реальный Рабочий Процесс</a></h2>
+<p>Представьте, что Вы используете корпоративный шаблон для микросервисов:</p>
+<ol>
+<li>
+<p><strong>Создайте шаблон</strong> в репозитории <code>mycorp/microservice-template</code>.</p>
+</li>
+<li>
+<p><strong>Добавьте псевдонимы</strong> для вашей команды:</p>
+<pre><code class="language-bash">inherit mycorp/microservice-template to alias mcsrv
+</code></pre>
+</li>
+<li>
+<p><strong>Установите параметры компании по умолчанию</strong>:</p>
+<pre><code class="language-bash">inherit default for AUTHOR
+# -&gt; напечатайте "Engineering Team &lt;eng@mycorp.com&gt;"
+inherit default for LICENSE
+# -&gt; напечатайте "MIT OR Apache-2.0"
+</code></pre>
+</li>
+<li>
+<p><strong>Создайте новый сервис</strong>:</p>
+<pre><code class="language-bash">inherit mcsrv to payment-service
+</code></pre>
+<p>Инструмент запросит только <em>специфичные для проекта</em> переменные (например, <code>SERVICE_NAME</code>, <code>PORT</code>).
+Настройки по умолчанию для компании уже заполнены.</p>
+</li>
+<li>
+<p><strong>Автоматическое открытие в VS Code</strong> и запуск <code>cargo build</code> через хук – Ваша команда начнет работу за считанные секунды.</p>
+</li>
+</ol>
+<h2 id="заключение"><a class="header" href="#заключение">Заключение</a></h2>
+<p><code>cargo-inherit</code> переносит возможности шаблонизации в Ваш терминал, уделяя особое внимание простоте и возможности
+повторного использования. Независимо от того, создаете ли Вы личный блог, микросервис или целый монорепозиторий,
+этот инструмент избавит Вас от утомительного копирования-вставки и поиска-замены.</p>
+<p>Интерфейс командной строки (CLI) — это дружелюбное лицо движка <a href="#движок-лежащий-в-основе-inherit-inherit-core"><code>inherit-core</code></a>. Вместе они
+образуют легковесную, нативную для Git систему шаблонов, которая органично вписывается в ваш рабочий процесс разработки.</p>
+<p>Попробуйте – в будущем Вы сами себе скажете спасибо.</p>
+<h2 id="ссылки"><a class="header" href="#ссылки">Ссылки</a></h2>
+<p><a href="https://crates.io/cargo-inherit">crates.io</a>
+<a href="https://docs.rs/cargo-inherit">docs.rs</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="движок-лежащий-в-основе-inherit-inherit-core"><a class="header" href="#движок-лежащий-в-основе-inherit-inherit-core">Движок, Лежащий В Основе Inherit: inherit-core</a></h1>
+<p>Добро пожаловать в основную библиотеку, которая обеспечивает работу <a href="https://crates.io/crates/cargo-inherit"><code>Inherit</code></a>!
+Если Вы когда-либо хотели иметь простой, дружественный к Git способ штамповать шаблоны проектов с динамическими
+заполнителями, Вы обратились по адресу. <code>inherit-core</code> выполняет всю тяжёлую работу:
+сканирование файлов, замену переменных, соблюдение правил <code>.inherignore</code> и даже запуск
+хуков после создания.</p>
+<p>В этой главе мы рассмотрим дизайн библиотеки, способы её программного использования и заглянем
+под капот её основных компонентов.</p>
+<h2 id="какую-проблему-решает-библиотека"><a class="header" href="#какую-проблему-решает-библиотека">Какую Проблему Решает Библиотека?</a></h2>
+<p>Копирование-вставка шаблонного проекта приводит к устаревшим копиям, несогласованным именованиям и утомительному
+поиску-и-замене. Лучший подход:</p>
+<ul>
+<li>Хранить <strong>исходный шаблон</strong> с заполнителями, такими как <code>@PROJECT_NAME@</code>.</li>
+<li>Позволить инструменту <strong>сканировать</strong> шаблон, чтобы обнаружить, какие переменные необходимы.</li>
+<li>Спросить пользователя (или скрипт) о конкретных значениях.</li>
+<li><strong>Сгенерировать</strong> новый проект, во всех заполнителях будет произведена замена – включая имена файлов и
+имена папок!</li>
+</ul>
+<p><code>inherit-core</code> реализует именно этот конвейер, оставаясь полностью независимым от пользовательского
+интерфейса. Инструмент командной строки <code>cargo-inherit</code> использует его для интерактивного опроса,
+но Вы также можете управлять им из сборочного скрипта или графического интерфейса.</p>
+<h2 id="основные-понятия"><a class="header" href="#основные-понятия">Основные понятия</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Понятие</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Шаблон</strong></td><td>Каталог, содержащий манифест <code>Inherit.toml</code> и произвольные файлы с заполнителями <code>@VAR@</code>.</td></tr>
+<tr><td><strong>Манифест</strong></td><td>TOML-файл, объявляющий переменные (с описаниями) и опциональные хуки.</td></tr>
+<tr><td><strong>Синтаксис заполнителей</strong></td><td><code>@UPPER_SNAKE_CASE@</code> – реализован с помощью крейта [<code>kissreplace</code>].</td></tr>
+<tr><td><strong><code>.inherignore</code></strong></td><td>Файл в стиле .gitignore для исключения определённых путей из обработки.</td></tr>
+<tr><td><strong>Хуки после создания</strong></td><td>Команды оболочки (sh или cmd), выполняемые после материализации проекта.</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Примечание:</strong> <code>inherit-core</code> <strong>не</strong> запрашивает у пользователя отсутствующие переменные. Это
+ответственность вызывающего кода. Библиотека только проверяет, что все требуемые переменные
+предоставлены и не пусты.</p>
+</blockquote>
+<h2 id="общий-взгляд-на-конвейер"><a class="header" href="#общий-взгляд-на-конвейер">Общий взгляд на конвейер</a></h2>
+<pre><code>+-------------+        +---------------------+        +--------------+
+|  Шаблон     |-------&gt;│    load_template    |-------&gt;|   Контекст   |
+|  Каталог    |        │  (сканирование +    |        | (переменные  |
+|             |        │   манифест)         |        |  + описания) |
++-------------+        +---------------------+        +------+-------+
+                                                             |
+                                                             V
++--------------+       +------------------+           +--------------+
+| Финальные    |------&gt;| process_template |----------&gt;|  Новый       |
+| значения     |       |  (замена, копие) |           |  проект      |
+| (Переменные) |       +------------------+           |  Каталог     |
++--------------+                                      +--------------+
+</code></pre>
+<ol>
+<li><strong>Загрузка</strong> – Чтение <code>Inherit.toml</code> и сканирование всех файлов шаблона для сбора каждого вхождения <code>@VAR@</code>.</li>
+<li><strong>Запрос</strong> (вне крейта) – Вызывающий код собирает конкретные значения от пользователя.</li>
+<li><strong>Обработка</strong> – Копирование каждого файла/папки с заменой заполнителей в <strong>содержимом</strong> и
+<strong>путях</strong>, с учётом <code>.inherignore</code>.</li>
+<li><strong>Завершение</strong> – Опционально запускает <code>git init</code> и выполняет хуки <code>post_create</code>.</li>
+</ol>
+<h2 id="модули-в-деталях"><a class="header" href="#модули-в-деталях">Модули в деталях</a></h2>
+<h3 id="errorrs--чёткие-пригодные-для-действия-ошибки"><a class="header" href="#errorrs--чёткие-пригодные-для-действия-ошибки"><code>error.rs</code> – Чёткие, пригодные для действия ошибки</a></h3>
+<p>Все операции, которые могут завершиться неудачей, возвращают <code>Result&lt;T, InheritError&gt;</code>. Перечисление ошибок различает:</p>
+<ul>
+<li>Отсутствие манифеста (<code>ManifestNotFound</code>)</li>
+<li>Ошибки разбора (<code>ManifestParse</code>)</li>
+<li>Отсутствующие переменные (<code>MissingVariables</code>)</li>
+<li>Ошибки ввода-вывода и выполнения команд</li>
+</ul>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum InheritError {
+    Io(#[from] std::io::Error),
+    ManifestNotFound(PathBuf),
+    ManifestParse(#[from] toml::de::Error),
+    MissingVariables(Vec&lt;String&gt;),
+    InvalidVariable(String),
+    CommandFailed { cmd: String, status: ExitStatus },
+    KissReplace(#[from] kissreplace::KissReplaceError),
+}
+<span class="boring">}</span></code></pre>
+<h3 id="manifestrs--конфигурация-шаблона"><a class="header" href="#manifestrs--конфигурация-шаблона"><code>manifest.rs</code> – Конфигурация шаблона</a></h3>
+<p>Десериализует <code>Inherit.toml</code> с тремя опциональными секциями:</p>
+<pre><code class="language-toml">[template]
+name = "cargo-lib"
+description = "Минимальный шаблон библиотеки Rust"
+
+[variables]
+PROJECT_NAME = "Имя проекта"
+AUTHOR = "Имя и email автора"
+
+[hooks]
+post_create = ["cargo fmt", "echo 'Готово!'"]
+</code></pre>
+<p>Карта <code>variables</code> служит двум целям:</p>
+<ul>
+<li>Она <strong>определяет</strong>, какие переменные ожидает шаблон
+(дополнительные переменные, найденные в файлах, также становятся обязательными).</li>
+<li>Строковое значение является <strong>описанием</strong> (показывается пользователю при запросе).</li>
+</ul>
+<blockquote>
+<p><code>#[serde(default)]</code> делает каждое поле опциональным – шаблон может вообще не иметь манифеста
+(хотя тогда вы потеряете описания и хуки).</p>
+</blockquote>
+<h3 id="ignorers--что-пропускать"><a class="header" href="#ignorers--что-пропускать"><code>ignore.rs</code> – Что пропускать</a></h3>
+<p><code>inherit-core</code> учитывает два уровня игнорирования:</p>
+<ol>
+<li><strong>Всегда игнорируется</strong> – <code>"Inherit.toml"</code>, <code>".inherignore"</code>, <code>".git"</code> (и всё внутри <code>.git/</code>).</li>
+<li><strong>Определяется пользователем</strong> – через файл <code>.inherignore</code> в корне шаблона, с синтаксисом <code>.gitignore</code>.</li>
+</ol>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let ignore = InheritIgnore::load(template_dir);
+if ignore.is_ignored(relative_path, is_dir) {
+    continue; // пропустить этот файл/папку
+}
+<span class="boring">}</span></code></pre>
+<p>Вы можете исключать артефакты сборки, lock-файлы или любой генерируемый контент, который не должен копироваться в новые проекты.</p>
+<h3 id="scannerrs--обнаружение-переменных"><a class="header" href="#scannerrs--обнаружение-переменных"><code>scanner.rs</code> – Обнаружение переменных</a></h3>
+<p>Сканер обходит каталог шаблона (с учётом игнорирования) и читает каждый текстовый файл.
+Он использует <code>kissreplace::scan::extract_vars</code> для поиска всех заполнителей вида <code>@...@</code>.
+Результатом является <code>HashSet&lt;String&gt;</code> <strong>имён обязательных переменных</strong>.</p>
+<p>Зачем сканировать? Потому что автор шаблона может забыть перечислить переменную в <code>[variables]</code>.
+Сканер гарантирует, что ничего не пропущено – объединение объявленных в манифесте и найденных сканером
+переменных становится финальным обязательным набором.</p>
+<h3 id="pipeliners--сердце-операции"><a class="header" href="#pipeliners--сердце-операции"><code>pipeline.rs</code> – Сердце операции</a></h3>
+<p>Две публичные функции управляют всем процессом:</p>
+<h4 id="load_templatesource_dir-path---resulttemplatecontext"><a class="header" href="#load_templatesource_dir-path---resulttemplatecontext"><code>load_template(source_dir: &amp;Path) -&gt; Result&lt;TemplateContext&gt;</code></a></h4>
+<p>Возвращает <code>TemplateContext</code>, содержащий:</p>
+<ul>
+<li>Разобранный <code>Manifest</code></li>
+<li><code>required_vars</code> – все переменные, которые должны быть в итоге предоставлены</li>
+<li><code>var_descriptions</code> – описания из манифеста (пустая строка, если не объявлено)</li>
+</ul>
+<p>Вы вызываете эту функцию первой, чтобы показать пользователю список того, что ему нужно заполнить.</p>
+<h4 id="process_templatesource_dir-target_dir-final_vars-opts---resultprocessresult"><a class="header" href="#process_templatesource_dir-target_dir-final_vars-opts---resultprocessresult"><code>process_template(source_dir, target_dir, final_vars, opts) -&gt; Result&lt;ProcessResult&gt;</code></a></h4>
+<p>Это настоящая рабочая лошадка. Она:</p>
+<ul>
+<li><strong>Проверяет</strong> имена переменных (должны соответствовать <code>^[A-Z][A-Z0-9_]*$</code> – по правилам <code>kissreplace</code>).</li>
+<li><strong>Проверяет</strong>, что все необходимые переменные присутствуют и <strong>не пусты</strong>.</li>
+<li><strong>Создаёт</strong> целевой каталог.</li>
+<li><strong>Обходит</strong> исходный каталог, соблюдая всегда игнорируемые и записи из <code>.inherignore</code>.</li>
+<li>Для каждого файла:
+<ul>
+<li>Если это каталог -&gt; создать его в целевом каталоге (после замены заполнителей в его имени).</li>
+<li>Если это файл:
+<ul>
+<li>Попытаться прочитать как UTF‑8 -&gt; заменить заполнители в <strong>содержимом</strong>, записать как текст.</li>
+<li>При ошибке (двоичный файл) -&gt; скопировать побайтово (без замены).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Если <code>opts.init_git</code> равно true -&gt; запускает <code>git init -q</code> в целевом каталоге.</li>
+<li>Если <code>opts.run_hooks</code> равно true -&gt; выполняет каждую команду <code>post_create</code> по порядку.</li>
+</ul>
+<p>Функция возвращает количество обработанных текстовых файлов и скопированных двоичных файлов.</p>
+<h2 id="собираем-всё-вместе--полный-пример"><a class="header" href="#собираем-всё-вместе--полный-пример">Собираем всё вместе – полный пример</a></h2>
+<p>Давайте смоделируем, что сделал бы инструмент командной строки. Мы будем использовать гипотетический пример шаблона <code>cargo-lib</code>.</p>
+<pre class="playground"><code class="language-rust">use inherit_core::{load_template, process_template, ProcessOptions, Variables};
+use std::fs;
+
+fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let template_dir = "./examples/cargo-lib";
+    let target_dir = "./my-new-lib";
+
+    // 1. Загружаем шаблон, чтобы узнать, какие переменные нужны
+    let ctx = load_template(template_dir.as_ref())?;
+    println!("Необходимые переменные: {:?}", ctx.required_vars);
+
+    // 2. Собираем значения (обычно Вы спросили бы пользователя)
+    let mut vars = Variables::new();
+    vars.insert("PROJECT_NAME".into(), "my_awesome_lib".into());
+    vars.insert("AUTHOR".into(), "Jane Doe &lt;jane@example.com&gt;".into());
+    vars.insert("VERSION".into(), "0.1.0".into());
+    vars.insert("DESCRIPTION".into(), "Делает что-то крутое".into());
+
+    // 3. Обрабатываем шаблон
+    let opts = ProcessOptions::default(); // init_git = true, run_hooks = true
+    let result = process_template(
+        template_dir.as_ref(),
+        target_dir.as_ref(),
+        &amp;vars,
+        opts,
+    )?;
+
+    println!("Сгенерировано {} текстовых файлов, {} двоичных файлов", 
+             result.processed_files, result.binary_files);
+
+    // Проверяем, что заполнители исчезли
+    let cargo_toml = fs::read_to_string(target_dir.join("Cargo.toml"))?;
+    assert!(!cargo_toml.contains('@'));
+
+    Ok(())
+}</code></pre>
+<p>Когда Вы запустите этот код, целевой каталог будет содержать свежий проект библиотеки Rust
+с <code>name = "my_awesome_lib"</code> и папкой <code>.git</code>
+(потому что <code>init_git</code> по умолчанию равен <code>true</code>).</p>
+<h2 id="продвинутые-возможности"><a class="header" href="#продвинутые-возможности">Продвинутые возможности</a></h2>
+<h3 id="заполнители-в-именах-файлов-и-папок"><a class="header" href="#заполнители-в-именах-файлов-и-папок">Заполнители в именах файлов и папок</a></h3>
+<p>Замена не ограничивается содержимым файлов – она также применяется к <strong>путям</strong>.
+Этот файл шаблона:</p>
+<pre><code>src/@PROJECT_NAME@/mod.rs
+</code></pre>
+<p>будет создан как <code>src/my_awesome_lib/mod.rs</code>. Очень полезно для языко-специфичных
+структур (например, пакетов Python, пространств имён Java).</p>
+<h3 id="двоичные-файлы-копируются-без-изменений"><a class="header" href="#двоичные-файлы-копируются-без-изменений">Двоичные файлы копируются без изменений</a></h3>
+<p>Если файл не может быть прочитан как UTF‑8, <code>inherit-core</code> считает его двоичным и выполняет
+побайтовое копирование. Замена заполнителей не производится, поэтому ваши изображения или
+скомпилированные ресурсы остаются нетронутыми.</p>
+<h3 id="хуки-после-создания-на-windows-и-unix"><a class="header" href="#хуки-после-создания-на-windows-и-unix">Хуки после создания на Windows и Unix</a></h3>
+<p>Команды <code>hooks.post_create</code> выполняются с использованием:</p>
+<ul>
+<li><code>sh -c "команда"</code> на Unix</li>
+<li><code>cmd /C "команда"</code> на Windows</li>
+</ul>
+<p>Это даёт максимальную переносимость. Типичный хук может запускать <code>cargo fmt</code>, <code>git add .</code> или <code>npm install</code>.</p>
+<h2 id="обработка-ошибок-на-практике"><a class="header" href="#обработка-ошибок-на-практике">Обработка ошибок на практике</a></h2>
+<p>Инструмент командной строки использует <code>InheritError</code> для вывода понятных пользователю сообщений. Например:</p>
+<ul>
+<li><strong>MissingVariables</strong> – выводит список переменных, которые пользователь забыл предоставить.</li>
+<li><strong>CommandFailed</strong> – показывает, какой хук завершился ошибкой, и его код выхода.</li>
+<li><strong>ManifestNotFound</strong> – предполагает, что путь, возможно, не является действительным каталогом шаблона.</li>
+</ul>
+<p>Поскольку каждая ошибка реализует <code>std::error::Error</code>, вы можете использовать <code>anyhow</code> или <code>thiserror</code> в своей собственной обёртке.</p>
+<h2 id="стратегия-тестирования"><a class="header" href="#стратегия-тестирования">Стратегия тестирования</a></h2>
+<p>Крейт включает интеграционные тесты, которые:</p>
+<ul>
+<li>Запускают пример шаблона <code>cargo-lib</code> от начала до конца.</li>
+<li>Проверяют, что отсутствующие переменные вызывают правильную ошибку.</li>
+<li>Тестируют замену переменных внутри имён файлов (случай <code>test_variable_in_filename</code>).</li>
+</ul>
+<p>Эти тесты используют <code>tempfile::tempdir()</code> для избежания загрязнения дерева исходных кодов. Они также отключают
+<code>init_git</code> и хуки, чтобы тесты оставались быстрыми и детерминированными.</p>
+<h2 id="почему-kissreplace"><a class="header" href="#почему-kissreplace">Почему <code>kissreplace</code>?</a></h2>
+<p>Движок заполнителей намеренно сделан крошечным и быстрым. <a href="#kissreplace-минималистичный-шаблонизатор"><code>kissreplace</code></a> предоставляет:</p>
+<ul>
+<li><strong>Сканирование</strong> – извлечение всех имён <code>@VAR@</code> из строки.</li>
+<li><strong>Замену</strong> – эффективную, однопроходную подстановку.</li>
+</ul>
+<p>Его философия «kiss» идеально соответствует <code>inherit-core</code>: никакой магии регулярных выражений, никаких случайных
+частичных замен, только чёткая семантика.</p>
+<h2 id="когда-использовать-inherit-core-напрямую"><a class="header" href="#когда-использовать-inherit-core-напрямую">Когда использовать <code>inherit-core</code> напрямую</a></h2>
+<p>Вы можете обойти <code>cargo-inherit</code> CLI, если хотите:</p>
+<ul>
+<li>Интегрировать шаблонизацию в большую сборочную систему (например, генератор рабочего пространства).</li>
+<li>Предоставить другой пользовательский интерфейс – TUI, веб-форму или генерацию, управляемую переменными окружения.</li>
+<li>Автоматизировать создание экземпляров шаблонов в конвейерах CI/CD.</li>
+</ul>
+<p>Просто добавьте <code>inherit-core</code> как зависимость, и вы получите весь механизм шаблонизации без интерактивной нагрузки.</p>
+<pre><code class="language-shell">cargo add inherit-core
+</code></pre>
+<h2 id="заключение-1"><a class="header" href="#заключение-1">Заключение</a></h2>
+<p><code>inherit-core</code> – это целенаправленная, хорошо протестированная библиотека, которая превращает любой каталог в <strong>повторно</strong>
+<strong>используемый параметризованный шаблон</strong>. Она учитывает файлы игнорирования, заменяет заполнители везде (даже в путях)
+и запускает хуки для финализации сгенерированного проекта. Строите ли Вы официальный инструмент <code>cargo-inherit</code> или свой
+собственный генератор, этот крейт даёт Вам прочную основу – и сохраняет магию за <code>@YOUR_VARIABLES@</code>.</p>
+<p>А теперь вперёд, создавайте шаблоны и позвольте <code>inherit-core</code> делать за Вас повторяющуюся работу!</p>
+<h2 id="ссылки-1"><a class="header" href="#ссылки-1">Ссылки</a></h2>
+<p><a href="https://crates.io/inherit-core">crates.io</a>
+<a href="https://docs.rs/inherit-core">docs.rs</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="kissreplace-минималистичный-шаблонизатор"><a class="header" href="#kissreplace-минималистичный-шаблонизатор">Kissreplace: Минималистичный шаблонизатор</a></h1>
+<p>Добро пожаловать в <strong>kissreplace</strong> – крошечный, без лишних сложностей шаблонизатор, который следует принципу <strong>KISS</strong> (Keep It
+Simple, Stupid! – Делай проще, дурак!). Если Вам нужно заменять заполнители вида <code>@VAR@</code> в строках, путях к файлам или целых
+коллекциях, этот крейт делает именно это и ничего больше. Никаких сложных DSL, никаких нежелательных накладных расходов во
+время выполнения – только простая, предсказуемая подстановка.</p>
+<hr>
+<h2 id="что-он-делает"><a class="header" href="#что-он-делает">Что Он Делает?</a></h2>
+<ul>
+<li>Находит каждое вхождение <code>@VAR@</code> в строке, где <code>VAR</code> соответствует <strong>простому правилу именования</strong> (буквы, цифры, символ
+подчёркивания и должен начинаться с буквы или подчёркивания).</li>
+<li>Заменяет его значением из хеш-карты (<code>HashMap&lt;String, String&gt;</code>).</li>
+<li>Оставляет недопустимые или отсутствующие переменные нетронутыми (например, <code>@123@</code>, <code>@var-name@</code> или <code>@UNKNOWN@</code> остаются
+как есть).</li>
+<li>Работает с отдельными строками, целыми векторами (на месте или по значению) и путями к файлам.</li>
+</ul>
+<hr>
+<h2 id="добавление-в-ваш-проект"><a class="header" href="#добавление-в-ваш-проект">Добавление в Ваш Проект</a></h2>
+<pre><code class="language-shell">cargo add kissreplace
+</code></pre>
+<p>Опциональная поддержка async (подключает <code>tokio</code> как зависимость, полезна, когда требуется асинхронный ввод-вывод для замены):</p>
+<pre><code class="language-toml">cargo add kissreplace --features async
+</code></pre>
+<hr>
+<h2 id="быстрый-старт-1"><a class="header" href="#быстрый-старт-1">Быстрый старт</a></h2>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+use kissreplace::{KissReplace, Variables};
+
+let mut vars = Variables::new();
+vars.insert("NAME".to_string(), "World".to_string());
+vars.insert("PROJECT".to_string(), "kissreplace".to_string());
+
+let template = "Hello @NAME@, you're reading @PROJECT@ docs!";
+let result = vars.replace_str(template);
+println!("{}", result);
+// Вывод: Hello World, you're reading kissreplace docs!
+<span class="boring">}</span></code></pre>
+<p>Под капотом <code>Variables</code> – это просто псевдоним типа для <code>HashMap&lt;String, String&gt;</code>, так что Вы можете создавать её любым удобным способом.</p>
+<hr>
+<h2 id="как-работает-замена"><a class="header" href="#как-работает-замена">Как Работает Замена</a></h2>
+<p>Функция <code>replace_str</code> сканирует входные данные <strong>слева направо</strong>:</p>
+<ol>
+<li>Ищет следующий символ <code>'@'</code>.</li>
+<li>Начиная с этой позиции, ищет вперед закрывающий <code>'@'</code>.</li>
+<li>Проверяет, является ли текст между ними <strong>допустимым именем переменной</strong>.</li>
+<li>Если да – заменяет его значением из карты (или оставляет <code>@VAR@</code>, если переменная отсутствует).</li>
+<li>Если нет – обрабатывает первый <code>'@'</code> как литеральный символ и продолжает сканирование.</li>
+</ol>
+<p>Поскольку сканирование <strong>однопроходное</strong> и рекурсивное раскрытие не выполняется, переменные, выглядящие как вложенные,
+например <code>@A@</code>, где <code>A</code> указывает на <code>"@B@"</code>, <strong>не</strong> раскрываются далее – вы получаете ровно одну подстановку на заполнитель.</p>
+<h3 id="допустимые-имена-переменных"><a class="header" href="#допустимые-имена-переменных">Допустимые Имена Переменных</a></h3>
+<ul>
+<li>Не должны быть пустыми.</li>
+<li>Первый символ должен быть буквой ASCII (<code>a-z</code>, <code>A-Z</code>) или подчёркиванием <code>_</code>.</li>
+<li>Последующие символы могут быть буквами ASCII, цифрами (<code>0-9</code>) или подчёркиванием.</li>
+</ul>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use kissreplace::valid::is_valid_var_name;
+
+assert!(is_valid_var_name("PROJECT_2"));
+assert!(is_valid_var_name("_private"));
+assert!(!is_valid_var_name("123start"));
+assert!(!is_valid_var_name("with-dash"));
+<span class="boring">}</span></code></pre>
+<hr>
+<h2 id="трейт-kissreplace"><a class="header" href="#трейт-kissreplace">Трейт <code>KissReplace</code></a></h2>
+<p>Этот трейт реализован для <code>Variables</code> (<code>HashMap&lt;String, String&gt;</code>) и предоставляет несколько удобных методов:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Метод</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>replace_str(&amp;self, input: &amp;str) -&gt; String</code></td><td>Основной метод – заменяет заполнители в одной строке.</td></tr>
+<tr><td><code>replace(&amp;self, sources: Vec&lt;String&gt;) -&gt; Vec&lt;String&gt;</code></td><td>Применяет замену к каждому элементу вектора, возвращая новый вектор.</td></tr>
+<tr><td><code>replace_mut(&amp;self, sources: &amp;mut Vec&lt;String&gt;)</code></td><td><strong>Версия на месте</strong> – более эффективна по выделению памяти.</td></tr>
+<tr><td><code>replace_paths(&amp;self, paths: Vec&lt;PathBuf&gt;) -&gt; Vec&lt;PathBuf&gt;</code></td><td>Работает с путями к файлам (преобразует в строку, заменяет, затем обратно в <code>PathBuf</code>).</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="пример-замена-многих-строк"><a class="header" href="#пример-замена-многих-строк">Пример: Замена Многих Строк</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let vars = /* ... */;
+let mut lines = vec![
+    "name = @NAME@".to_string(),
+    "version = @VERSION@".to_string(),
+];
+vars.replace_mut(&amp;mut lines);
+// lines теперь содержит заменённые значения
+<span class="boring">}</span></code></pre>
+<h3 id="пример-пути-к-файлам"><a class="header" href="#пример-пути-к-файлам">Пример: Пути к Файлам</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let vars = /* ... */;
+let paths = vec![
+    PathBuf::from("src/@PROJECT@/main.rs"),
+    PathBuf::from("config/@PROJECT@.toml"),
+];
+let new_paths = vars.replace_paths(paths);
+<span class="boring">}</span></code></pre>
+<hr>
+<h2 id="сканирование-переменных"><a class="header" href="#сканирование-переменных">Сканирование Переменных</a></h2>
+<p>Если Вам нужно узнать только <strong>какие переменные</strong> встречаются в шаблоне (без их замены), используйте <code>scan::extract_vars</code>:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use kissreplace::scan;
+
+let template = "Hello @NAME@, your @PROJECT@ is version @VERSION@";
+let vars = extract_vars(template);
+// vars = {"NAME", "PROJECT", "VERSION"}
+<span class="boring">}</span></code></pre>
+<p>Функция возвращает <code>HashSet&lt;String&gt;</code> уникальных допустимых имён переменных, найденных в тексте. Логика сканирования точно такая же, как в <code>replace_str</code>, поэтому можно доверять, что сообщённые имена будут заменены при последующем вызове <code>replace_str</code>.</p>
+<hr>
+<h2 id="обработка-ошибок"><a class="header" href="#обработка-ошибок">Обработка Ошибок</a></h2>
+<p>Крейт определяет собственное перечисление <code>KissReplaceError</code>. В настоящее время существуют два варианта:</p>
+<ul>
+<li><code>InvalidVariableName(String)</code> – возвращается функциями, проверяющими имена (если Вы создаёте свою собственную логику проверки).</li>
+<li><code>InvalidUtf8</code> – используется, когда преобразование <code>PathBuf</code> в строку завершается неудачей (путь не является допустимым UTF‑8).</li>
+</ul>
+<p>Большинство методов замены не возвращают <code>Result</code> (они безошибочны). Ошибки появляются только если Вы явно вызываете функции из модуля <code>valid</code> или обрабатываете пути с не‑UTF‑8 компонентами.</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use kissreplace::{KissReplaceError, valid};
+
+if let Err(e) = some_validation_function("1invalid") {
+    println!("Ошибка: {}", e);
+}
+<span class="boring">}</span></code></pre>
+<hr>
+<h2 id="async-возможность"><a class="header" href="#async-возможность">Async Возможность</a></h2>
+<p>Когда Вы включаете возможность <code>async</code>, крейт подтягивает <code>tokio</code> как опциональную зависимость. Сама логика
+замены <strong>синхронна</strong> – эта возможность просто делает <code>tokio</code> доступным для ваших собственных асинхронных
+задач ввода-вывода, например:</p>
+<ul>
+<li>Чтение сотен файлов шаблонов конкурентно с помощью <code>tokio::fs</code>.</li>
+<li>Замена переменных в каждом файле и запись результатов.</li>
+</ul>
+<p>Ничто в <code>kissreplace</code> само по себе не является <code>async</code>, но возможность позволяет содержать список
+зависимостей в порядке, если вы уже используете <code>tokio</code>.</p>
+<hr>
+<h2 id="тестирование-и-краевые-случаи"><a class="header" href="#тестирование-и-краевые-случаи">Тестирование и Краевые Случаи</a></h2>
+<p>Крейт поставляется с тщательным набором тестов. Вот некоторые варианты поведения, на которые вы можете положиться:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Входные данные</th><th>Переменные</th><th>Выходные данные</th></tr>
+</thead>
+<tbody>
+<tr><td><code>"@NAME@ and @MISSING@"</code></td><td><code>NAME=Alice</code></td><td><code>"Alice and @MISSING@"</code></td></tr>
+<tr><td><code>"@@X@@"</code></td><td><code>X=Y</code></td><td><code>"@Y@"</code></td></tr>
+<tr><td><code>"@var-name@ and @123@"</code></td><td>–</td><td>без изменений (недопустимые имена)</td></tr>
+<tr><td><code>"hello @X and @X@"</code></td><td><code>X=Y</code></td><td><code>"hello @X and Y"</code> (незакрытый <code>@</code> остаётся литералом)</td></tr>
+<tr><td><code>"@A@@B@"</code></td><td><code>A=1, B=2</code></td><td><code>"12"</code></td></tr>
+<tr><td><code>"@A@"</code></td><td><code>A="@B@"</code>, <code>B=X</code></td><td><code>"@B@"</code> (нет вложенного раскрытия)</td></tr>
+</tbody>
+</table>
+</div>
+<p>Правило <strong>отсутствия вложенного раскрытия</strong> является намеренным – оно сохраняет низкую сложность и избегает бесконечных циклов.</p>
+<hr>
+<h2 id="соображения-производительности"><a class="header" href="#соображения-производительности">Соображения Производительности</a></h2>
+<ul>
+<li><strong>Однопроходное</strong> сканирование входных данных – время <code>O(n)</code>.</li>
+<li><code>replace_mut</code> повторно использует существующую ёмкость <code>Vec</code>, уменьшая количество выделений памяти при обработке многих строк.</li>
+<li>Сканер для <code>extract_vars</code> также выполняет однопроходное сканирование и использует <code>HashSet</code> для хранения уникальных имён.</li>
+</ul>
+<p>Если Вам нужно заменить один и тот же шаблон сотни раз с разными наборами переменных, рассмотрите предварительное сканирование имён переменных и последующую замену через <code>String::replace</code> или ручной цикл – но для большинства случаев использования прямой вызов <code>replace_str</code> вполне подходит.</p>
+<hr>
+<h2 id="философия--почему-kiss"><a class="header" href="#философия--почему-kiss">Философия – Почему KISS?</a></h2>
+<p>Многие шаблонизаторы разрастаются органически: условия, циклы, фильтры, подшаблоны… и внезапно ваш «простой» шаблонизатор становится полноценным языком. <strong>kissreplace</strong> намеренно останавливается на подстановке заполнителей. Он идеален для:</p>
+<ul>
+<li>Генерации конфигурационных файлов (например, <code>config.@ENV@.toml</code> -&gt; <code>config.production.toml</code>)</li>
+<li>Простых шаблонов электронных писем или уведомлений</li>
+<li>Раскрытия переменных окружения в пользовательских CLI</li>
+<li>Обучения концепции шаблонизации без отвлекающих факторов</li>
+</ul>
+<p>Если вам нужна логика, вы всегда можете объединить его с собственными управляющими конструкциями Rust – это сохраняет простым как синтаксис шаблонов, так и ваш код.</p>
+<hr>
+<h2 id="резюме"><a class="header" href="#резюме">Резюме</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Что Вы хотите</th><th>Как помогает kissreplace</th></tr>
+</thead>
+<tbody>
+<tr><td>Заменить заполнители <code>@VAR@</code></td><td><code>vars.replace_str("...")</code></td></tr>
+<tr><td>Эффективно обработать много строк</td><td><code>replace_mut(&amp;mut vec)</code></td></tr>
+<tr><td>Работать с путями файлов</td><td><code>replace_paths(vec![...])</code></td></tr>
+<tr><td>Обнаружить, какие переменные используются</td><td><code>scan::extract_vars("...")</code></td></tr>
+<tr><td>Проверить допустимость имени переменной</td><td><code>valid::is_valid_var_name("...")</code></td></tr>
+<tr><td>Оставаться лёгким в плане зависимостей</td><td>Использует только <code>std</code> + <code>thiserror</code> (async опционально)</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>kissreplace</strong> – это маленький, сфокусированный инструмент, и в этом его суперсила. Вперёд, добавьте немного заполнителей
+<code>@VAR@</code> в Ваши строки и позвольте этому крейту сделать всё остальное. Приятного шаблонизирования!</p>
+<h2 id="ссылки-2"><a class="header" href="#ссылки-2">Ссылки</a></h2>
+<p><a href="https://crates.io/kissreplace">crates.io</a>
+<a href="https://docs.rs/kissreplace">docs.rs</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ленивая-загрузка-умное-кэширование-крейт-lazyget"><a class="header" href="#ленивая-загрузка-умное-кэширование-крейт-lazyget">Ленивая Загрузка, Умное Кэширование: Крейт <code>lazyget</code></a></h1>
+<p>Добро пожаловать в руководство по <code>lazyget</code>! Если Вы когда-либо ловили себя на том, что снова и снова перекачиваете один и тот же огромный ресурс,
+или копируете-вставляете хрупкий код кэширования между проектами, Вы обратились по адресу.</p>
+<p><code>lazyget</code> — это крошечный, но мощный крейт Rust, который решает большую проблему: <strong>как получить артефакт (файл, двоичный файл,
+набор данных — что угодно) один раз, закэшировать его локально и больше никогда об этом не беспокоиться</strong>.</p>
+<p>Он делает одну вещь и делает её хорошо: учитывая каталог кэша и идентификатор артефакта, он либо вернёт существующий
+путь к кэшированному файлу, либо Выполнит вашу пользовательскую логику получения ровно один раз, сохранит результат и вернёт Вам
+путь – всё это с атомарными обновлениями и автоматической очисткой при сбое.</p>
+<p>Давайте погрузимся.</p>
+<h2 id="какую-проблему-решает-lazyget"><a class="header" href="#какую-проблему-решает-lazyget">Какую Проблему Решает <code>lazyget</code>?</a></h2>
+<p>Представьте, что Вы пишете инструмент командной строки, которому нужен большой файл AI-модели, игровой движок, который загружает наборы ресурсов,
+или сборочный скрипт, который подтягивает конкретный инструментарий. Вы хотите:</p>
+<ul>
+<li><strong>Никаких избыточных загрузок</strong> – если артефакт уже на диске, просто используйте его.</li>
+<li><strong>Никакого устаревшего кэша</strong> – иногда Вы <em>должны</em> обновить артефакт.</li>
+<li><strong>Никаких наполовину записанных файлов</strong> – если загрузка не удалась, старая (или частичная) версия никогда не должна использоваться.</li>
+<li><strong>Никакого шаблонного кода</strong> – Вы не должны каждый раз писать танцы с временными каталогами и обработку ошибок.</li>
+</ul>
+<p><code>lazyget</code> обрабатывает всё это за вас. Вы просто указываете ему, <em>как</em> получить артефакт (замыкание или асинхронную
+функцию), а он позаботится об остальном.</p>
+<h2 id="быстрый-старт-2"><a class="header" href="#быстрый-старт-2">Быстрый Старт</a></h2>
+<p>Добавьте <code>lazyget</code> в ваши зависимости:</p>
+<pre><code class="language-shell">cargo add lazyget
+</code></pre>
+<p>Если Вам нужна асинхронная поддержка (с использованием <code>tokio</code>), включите возможность <code>async</code>:</p>
+<pre><code class="language-shell">cargo add lazyget --features async
+</code></pre>
+<h3 id="синхронный-пример"><a class="header" href="#синхронный-пример">Синхронный Пример</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use lazyget::{fetch, make_id};
+use std::fs;
+use std::path::Path;
+
+// Где хранить кэшированные артефакты (здесь: системный каталог кэша)
+let cache_dir = dirs::cache_dir().unwrap().join("my-app");
+
+// Стабильный ID для вашего артефакта – может осноВываться на URL и хеше коммита
+let id = make_id("https://github.com/example/model", Some("v1.2.3"));
+
+let artifact_path = fetch(&amp;cache_dir, &amp;id, |temp_dir: &amp;Path| {
+    // Это замыкание Выполняется, только если артефакт ЕЩЁ НЕ закэширован.
+    // `temp_dir` – это черновой каталог, который станет финальным расположением кэша.
+    // Загрузите или сгенерируйте ваш артефакт здесь:
+    let response = ureq::get("https://example.com/model.bin").call()?;
+    let mut reader = response.into_reader();
+    let mut file = fs::File::create(temp_dir.join("model.bin"))?;
+    std::io::copy(&amp;mut reader, &amp;mut file)?;
+    Ok(())
+})?;
+
+println!("Артефакт готов по адресу: {}", artifact_path.display());
+<span class="boring">}</span></code></pre>
+<p>Если Вы запустите это дважды, замыкание Выполнится только в перВый раз. Второй Вызов немедленно вернёт
+кэшированный путь.</p>
+<h3 id="асинхронный-пример-с-tokio"><a class="header" href="#асинхронный-пример-с-tokio">Асинхронный Пример (с <code>tokio</code>)</a></h3>
+<p>Включите возможность <code>async</code> и используйте <code>async_fetch</code>:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use lazyget::async_fetch;
+use tokio::fs;
+use tokio::io::AsyncWriteExt;
+
+let cache_dir = dirs::cache_dir().unwrap().join("my-app");
+let id = lazyget::make_id("https://github.com/example/model", Some("v1.2.3"));
+
+let artifact_path = async_fetch(&amp;cache_dir, &amp;id, |temp_dir| async move {
+    let url = "https://example.com/model.bin";
+    let response = reqwest::get(url).await?;
+    let bytes = response.bytes().await?;
+    let mut file = tokio::fs::File::create(temp_dir.join("model.bin")).await?;
+    file.write_all(&amp;bytes).await?;
+    Ok(())
+}).await?;
+<span class="boring">}</span></code></pre>
+<h2 id="основные-понятия-1"><a class="header" href="#основные-понятия-1">Основные Понятия</a></h2>
+<h3 id="1-идентификатор-артефакта"><a class="header" href="#1-идентификатор-артефакта">1. Идентификатор Артефакта</a></h3>
+<p>Каждый артефакт идентифицируется <strong>именем каталога</strong> внутри вашего корня кэша. Самый простой способ — использовать
+человекочитаемую строку:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let id = "my-cool-model-v2";
+<span class="boring">}</span></code></pre>
+<p>Но Вы также можете сгенерировать детерминированный хеш из URL и опционального тега (например, коммита Git) с помощью
+<code>make_id</code>:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let id = make_id("https://github.com/example/repo", Some("abc123def"));
+// =&gt; "a6b4c3e2..."  (64 шестнадцатеричных символа)
+<span class="boring">}</span></code></pre>
+<p><code>make_id</code> Вычисляет SHA‑256 от <code>url</code> + <code>":"</code> + <code>tag</code> (если тег <code>Some</code>). Это идеально, когда источник вашего
+артефакта меняется со временем, и Вы хотите автоматически инвалидировать кэш.</p>
+<h3 id="2-fetch--async_fetch--ленивая-рабочая-лошадка"><a class="header" href="#2-fetch--async_fetch--ленивая-рабочая-лошадка">2. <code>fetch</code> / <code>async_fetch</code> – Ленивая Рабочая Лошадка</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn fetch&lt;P, F&gt;(cache_dir: P, artifact_id: &amp;str, fetch_fn: F) -&gt; Result&lt;PathBuf&gt;
+where
+    P: AsRef&lt;Path&gt;,
+    F: FnOnce(&amp;Path) -&gt; Result&lt;(), Box&lt;dyn Error + Send + Sync&gt;&gt;,
+<span class="boring">}</span></code></pre>
+<p><strong>Поведение</strong>:</p>
+<ul>
+<li>Проверить, существует ли <code>cache_dir/artifact_id</code>.</li>
+<li>Если да -&gt; немедленно вернуть его путь.</li>
+<li>Если нет:
+<ul>
+<li>Создать временный каталог <code>.artifact_id-tmp</code> внутри <code>cache_dir</code>.</li>
+<li>Вызвать <code>fetch_fn</code> с этим временным каталогом.</li>
+<li>Если <code>fetch_fn</code> успешен -&gt; атомарно переименовать временный каталог в финальное имя.</li>
+<li>Если <code>fetch_fn</code> завершается ошибкой -&gt; удалить временный каталог и распространить ошибку.</li>
+</ul>
+</li>
+</ul>
+<p>Это гарантирует, что Вы никогда не увидите частично записанный или повреждённый артефакт.</p>
+<h3 id="3-refetch--async_refetch--принудительное-обновление"><a class="header" href="#3-refetch--async_refetch--принудительное-обновление">3. <code>refetch</code> / <code>async_refetch</code> – Принудительное Обновление</a></h3>
+<p>Иногда Вы хотите игнорировать существующий кэш и получить артефакт заново, даже
+если он присутствует. Именно для этого предназначен <code>refetch</code>:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn refetch&lt;P, F&gt;(cache_dir: P, artifact_id: &amp;str, fetch_fn: F) -&gt; Result&lt;PathBuf&gt;
+<span class="boring">}</span></code></pre>
+<p>Он удаляет существующий кэшированный каталог (если есть), а затем внутренне Вызывает <code>fetch</code>.</p>
+<h2 id="обработка-ошибок-1"><a class="header" href="#обработка-ошибок-1">Обработка Ошибок</a></h2>
+<p>Все операции, которые могут завершиться неудачей, возвращают <code>Result&lt;T, LazyGetError&gt;</code>. <code>LazyGetError</code>
+— это перечисление <code>thiserror</code>, охватывающее:</p>
+<ul>
+<li><code>Io</code> – ошибки ввода-Вывода (файловая система).</li>
+<li><code>Fetch</code> – ваше собственное замыкание вернуло ошибку (обёрнуто в трейт-объект <code>Box</code>).</li>
+<li><code>CacheCreate</code> – не удалось создать корневой каталог кэша.</li>
+<li><code>AtomicRename</code> – финальный шаг переименования не удался (очень редко, но возможно на некоторых файлоВых системах).</li>
+</ul>
+<p>Это означает, что Вы можете использовать сопоставление с образцом для обработки конкретных случаев или использовать <code>?</code>, чтобы пробросить ошибки наверх.</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use lazyget::{LazyGetError, fetch};
+
+match fetch(cache_dir, "my-id", |dir| Ok(())) {
+    Ok(path) =&gt; println!("Получен {}", path.display()),
+    Err(LazyGetError::Fetch(e)) =&gt; eprintln!("Логика загрузки не удалась: {}", e),
+    Err(e) =&gt; eprintln!("Ошибка системы кэширования: {}", e),
+}
+<span class="boring">}</span></code></pre>
+<h2 id="под-капотом-как-работает-атомарное-кэширование"><a class="header" href="#под-капотом-как-работает-атомарное-кэширование">Под Капотом: Как Работает Атомарное Кэширование</a></h2>
+<p><code>lazyget</code> следует простому, но надёжному протоколу:</p>
+<ol>
+<li><strong>Проверка существования</strong> – Если <code>target_dir</code> существует, мы закончили.</li>
+<li><strong>Подготовка временного каталога</strong> – <code>cache_dir/.artifact_id-tmp</code>. Если он уже существует от предыдущего
+прерванного запуска, он удаляется.</li>
+<li><strong>Выполнение вашей загрузки</strong> – Вы записываете файлы во временный каталог. Если Вам нужно загрузить
+несколько файлов или распаковать архив, делайте это там.</li>
+<li><strong>Фиксация</strong> – <code>std::fs::rename</code> (или <code>tokio::fs::rename</code>). На большинстве файлоВых систем это
+атомарно – либо переименование происходит, либо нет. Ни один читатель никогда не увидит неполный каталог.</li>
+<li><strong>Очистка</strong> – Если ваше замыкание возвращает ошибку, временный каталог удаляется автоматически.</li>
+</ol>
+<p>Этот подход работает на Linux, macOS и Windows.</p>
+<h2 id="полный-пример-загрузка-zip-архива"><a class="header" href="#полный-пример-загрузка-zip-архива">Полный Пример: Загрузка Zip-Архива</a></h2>
+<p>Вот реальный синхронный пример, который загружает zip-файл, извлекает его и кэширует результат:</p>
+<pre class="playground"><code class="language-rust no_run"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use lazyget::{fetch, make_id, LazyGetError};
+use std::fs::File;
+use std::io::{Cursor, Read};
+use std::path::Path;
+use zip::ZipArchive;
+
+fn fetch_and_extract(temp_dir: &amp;Path) -&gt; Result&lt;(), Box&lt;dyn std::error::Error + Send + Sync&gt;&gt; {
+    // Загрузка zip
+    let mut resp = ureq::get("https://example.com/assets.zip").call()?;
+    let mut bytes = Vec::new();
+    resp.into_reader().read_to_end(&amp;mut bytes)?;
+
+    // Распаковка в temp_dir
+    let mut archive = ZipArchive::new(Cursor::new(bytes))?;
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i)?;
+        let out_path = temp_dir.join(file.mangled_name());
+        if file.is_dir() {
+            std::fs::create_dir_all(&amp;out_path)?;
+        } else {
+            let mut outfile = File::create(&amp;out_path)?;
+            std::io::copy(&amp;mut file, &amp;mut outfile)?;
+        }
+    }
+    Ok(())
+}
+
+let cache_dir = std::env::temp_dir().join("my-cache");
+let id = make_id("https://example.com/assets.zip", Some("v2"));
+let path = fetch(&amp;cache_dir, &amp;id, fetch_and_extract)?;
+println!("Ресурсы готоВы по адресу: {}", path.display());
+<span class="boring">}</span></code></pre>
+<h2 id="стратегии-тестирования"><a class="header" href="#стратегии-тестирования">Стратегии Тестирования</a></h2>
+<p><code>lazyget</code> легко тестировать, потому что Вы можете передать любой <code>FnOnce</code> – в том числе тот, который подсчитывает,
+сколько раз он был Вызван. Сам крейт использует <code>tempfile::tempdir()</code> для создания временных корней кэша для тестов.</p>
+<p>Пример шаблона тестирования:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[test]
+fn test_caching_behaviour() {
+    let tmp = tempfile::tempdir().unwrap();
+    let id = "test-id";
+    let mut counter = 0;
+
+    // ПерВый Вызов: Выполняет замыкание
+    let _ = fetch(tmp.path(), id, |_dir| { counter += 1; Ok(()) }).unwrap();
+    assert_eq!(counter, 1);
+
+    // Второй Вызов: использует кэш
+    let _ = fetch(tmp.path(), id, |_dir| { counter += 1; Ok(()) }).unwrap();
+    assert_eq!(counter, 1);
+}
+<span class="boring">}</span></code></pre>
+<h2 id="возможности-feature-flags"><a class="header" href="#возможности-feature-flags">Возможности (<code>feature flags</code>)</a></h2>
+<ul>
+<li><strong>default</strong> – никаких дополнительных возможностей.</li>
+<li><strong>async</strong> – добавляет зависимость <code>tokio</code> и предоставляет <code>async_fetch</code> / <code>async_refetch</code>.
+Вы получаете <code>tokio::fs</code> и <code>tokio::process</code>, но среда Выполнения не запускается автоматически –
+Вам нужна среда Выполнения Tokio в вашем приложении.</li>
+</ul>
+<h2 id="когда-не-следует-использовать-lazyget"><a class="header" href="#когда-не-следует-использовать-lazyget">Когда не следует использовать <code>lazyget</code></a></h2>
+<ul>
+<li>Вам нужно кэшировать очень большое количество крошечных файлов (накладные расходы на каталог артефакта
+минимальны, но если у вас миллионы файлов, рассмотрите базу данных).</li>
+<li>Вы пишете для окружения <code>no_std</code> (этот крейт интенсивно использует <code>std</code>).</li>
+</ul>
+<h2 id="заключение-2"><a class="header" href="#заключение-2">Заключение</a></h2>
+<p><code>lazyget</code> предоставляет Вам надёжное, атомарное, ленивое кэширование с API, которое умещается в голове.
+Это такой крейт, который исчезает в вашем коде – Вы замечаете его только тогда, когда он работает идеально.</p>
+<p>Вперёд, перестаньте перекачивать тот 2-гигабайтный файл модели при каждом запуске CI и позвольте <code>lazyget</code> взять управление на себя.</p>
+<p><em>Трудолюбивой загрузки!</em></p>
+<h2 id="ссылки-3"><a class="header" href="#ссылки-3">Ссылки</a></h2>
+<p><a href="https://crates.io/lazyget">crates.io</a>
+<a href="https://docs.rs/lazyget">docs.rs</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="wrapc-разбор-аргументов-rustc-для-инструментов-rustc_wrapper"><a class="header" href="#wrapc-разбор-аргументов-rustc-для-инструментов-rustc_wrapper"><code>wrapc</code>: Разбор аргументов <code>rustc</code> для инструментов <code>RUSTC_WRAPPER</code></a></h1>
+<h2 id="обзор"><a class="header" href="#обзор">Обзор</a></h2>
+<p>Когда вы создаёте инструмент, который перехватывает компиляцию Rust — будь то кэш компиляции, пользовательский профайлер,
+статический анализатор или инжектор флагов компоновщика — вам неизбежно понадобится разбирать аргументы командной строки <code>rustc</code>.</p>
+<p>Это сложнее, чем кажется.</p>
+<p>CLI <code>rustc</code> — подвижная цель: он смешивает значения с <code>=</code> и через пробел, содержит сложный подсинтаксис для компоновки (<code>-l static:+bundle,+whole-archive=name:renamed</code>) и постоянно развивается с флагами, доступными только в nightly. Универсальные парсеры CLI, такие как <code>clap</code>, слишком жёсткие, слишком тяжёлые и принципиально не подходят для протокола обёрток.</p>
+<p><code>wrapc</code> существует именно для решения этой проблемы.</p>
+<p>Он предоставляет <strong>строго типизированный, осведомлённый о протоколе парсер</strong>, который:</p>
+<ul>
+<li>Понимает формат вызова Cargo: <code>&lt;wrapper&gt; - &lt;rustc&gt; &lt;args...&gt;</code></li>
+<li>Разбирает сложные флаги в структурированные типы Rust (<code>--emit</code>, <code>--extern</code>, <code>-L</code>, <code>-l</code> и т.д.)</li>
+<li>Гарантирует <strong>безупречное восстановление</strong> с помощью <code>Info::to_args()</code></li>
+<li>Корректно обрабатывает неизвестные / nightly-флаги, помещая их в <code>info.unknown</code></li>
+<li>Избегает паник на краевых случаях, таких как разделитель <code>-</code> или пропущенные значения</li>
+</ul>
+<p>Короче: <code>wrapc</code> позволяет вам сосредоточиться на том, что ваша обёртка <em>делает</em>, а не на борьбе с разбором аргументов.</p>
+<h2 id="быстрый-старт-3"><a class="header" href="#быстрый-старт-3">Быстрый старт</a></h2>
+<p>Добавьте зависимость:</p>
+<pre><code class="language-bash">cargo add wrapc
+</code></pre>
+<p>Затем в вашем <code>main.rs</code> обёртки:</p>
+<pre class="playground"><code class="language-rust">use std::process::Command;
+use wrapc::fetch;
+
+fn main() {
+    // 1. Разбираем `std::env::args()` в соответствии с протоколом обёртки
+    let mut info = fetch().expect("Не удалось разобрать аргументы rustc");
+
+    // 2. Обрабатываем сквозные команды на раннем этапе (help/version/sysroot probes)
+    if info.help || info.version || info.print.is_some() {
+        let rustc = info.rustc.unwrap_or_else(|| "rustc".to_string());
+        let status = Command::new(rustc)
+            .args(info.to_args())
+            .status()
+            .expect("Не удалось запустить rustc");
+        std::process::exit(status.code().unwrap_or(1));
+    }
+
+    // 3. Анализируем или изменяем контекст компиляции
+    if info.crate_name.as_deref() == Some("legacy_crate") {
+        info.codegen_opts.push("opt-level=1".to_string());
+    }
+
+    // 4. Определяем реальный путь к rustc и восстанавливаем аргументы
+    let rustc_path = info.rustc.unwrap_or_else(|| "rustc".to_string());
+    let args = info.to_args();
+
+    // 5. Запускаем реальный компилятор
+    let status = Command::new(rustc_path)
+        .args(&amp;args)
+        .status()
+        .expect("Не удалось запустить rustc");
+
+    std::process::exit(status.code().unwrap_or(1));
+}</code></pre>
+<p>Это весь скелет. Пять чётких шагов. Никакого разделения строк, никакого хрупкого индексирования, нулевая потеря данных.</p>
+<h2 id="основные-понятия-2"><a class="header" href="#основные-понятия-2">Основные понятия</a></h2>
+<h3 id="протокол-обёртки-и-разделитель--"><a class="header" href="#протокол-обёртки-и-разделитель--">Протокол обёртки и разделитель <code>-</code></a></h3>
+<p>Cargo вызывает обёртки, используя строгий формат:</p>
+<pre><code>&lt;wrapper_binary&gt; - &lt;actual_rustc_path&gt; &lt;rustc_args...&gt;
+</code></pre>
+<p><code>wrapc::fetch()</code> автоматически:</p>
+<ol>
+<li>Отбрасывает первые три аргумента</li>
+<li>Сохраняет реальный путь к компилятору в <code>info.rustc</code></li>
+<li>Разбирает оставшуюся часть как аргументы <code>rustc</code></li>
+</ol>
+<h4 id="краевой-случай-с--"><a class="header" href="#краевой-случай-с--">Краевой случай с <code>-</code></a></h4>
+<p>Инструменты иногда передают <code>-</code> как имя входного файла, чтобы указать <code>rustc</code> читать из <code>stdin</code>.
+Поскольку протокол обёртки <em>также</em> использует <code>-</code> как разделитель, наивные парсеры здесь ломаются.</p>
+<p><code>wrapc</code> обрабатывает это контекстуально:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Вызов: `my_wrapper - rustc -`
+let info = wrapc::fetch().unwrap();
+assert_eq!(info.rustc, Some("rustc".to_string()));
+assert_eq!(info.inputs, vec![std::path::PathBuf::from("-")]);
+<span class="boring">}</span></code></pre>
+<p>Первый <code>-</code> — это разделитель протокола; второй правильно идентифицируется как входной файл.</p>
+<h3 id="типобезопасный-разбор-флагов"><a class="header" href="#типобезопасный-разбор-флагов">Типобезопасный разбор флагов</a></h3>
+<p>Вместо возврата <code>Vec&lt;String&gt;</code>, <code>wrapc</code> разлагает сложные флаги на структурированные типы:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Флаг</th><th>Поле для разбора</th><th>Тип</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--emit=llvm-ir,obj</code></td><td><code>info.emit</code></td><td><code>Vec&lt;EmitKind&gt;</code></td></tr>
+<tr><td><code>--extern crate=path</code></td><td><code>info.externs</code></td><td><code>Vec&lt;Extern&gt;</code></td></tr>
+<tr><td><code>-L kind=path</code></td><td><code>info.libpaths</code></td><td><code>Vec&lt;LibrarySearchPath&gt;</code></td></tr>
+<tr><td><code>-l kind:+mods=name:rename</code></td><td><code>info.links</code></td><td><code>Vec&lt;LinkLib&gt;</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Это позволяет писать логику вроде:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use wrapc::{LibrarySearchPathKind, LinkLibKind};
+
+for lib_path in &amp;info.libpaths {
+    if lib_path.kind == LibrarySearchPathKind::Native {
+        println!("Путь для нативного поиска: {:?}", lib_path.path);
+    }
+}
+
+for link in &amp;info.links {
+    if matches!(link.kind, Some(LinkLibKind::Static)) {
+        println!("Статическая библиотека: {} (модификаторы: {:?})", link.name, link.modifiers);
+    }
+}
+<span class="boring">}</span></code></pre>
+<p>Никаких регулярных выражений. Никакого ручного разделения. Просто типизированные данные.</p>
+<h3 id="безупречное-сквозное-восстановление"><a class="header" href="#безупречное-сквозное-восстановление">Безупречное сквозное восстановление</a></h3>
+<p>Обёртка никогда не должна нарушать сборку. Когда вы изменяете подмножество аргументов,
+всё остальное должно пройти <em>точно</em> так, как задумал Cargo.</p>
+<p><code>wrapc</code> гарантирует это через <code>Info::to_args()</code>:</p>
+<ul>
+<li>Сохраняет исходные пробелы и формы <code>=</code> или через пробел</li>
+<li>Поддерживает порядок аргументов</li>
+<li>Заново выводит неизвестные флаги из <code>info.unknown</code> без изменений</li>
+<li>Обрабатывает краевые случаи, такие как значения в кавычках или встроенные пробелы</li>
+</ul>
+<p>Вы изменяете то, что нужно; <code>wrapc</code> обрабатывает остальное.</p>
+<h3 id="корректная-деградация-для-nightly-флагов"><a class="header" href="#корректная-деградация-для-nightly-флагов">Корректная деградация для nightly-флагов</a></h3>
+<p>Rust развивается. Ежедневно в nightly-компиляторах появляются новые флаги.</p>
+<p><code>wrapc</code> не притворяется, что знает их все. Вместо этого:</p>
+<ol>
+<li>Известные флаги -&gt; разбираются в типизированные поля</li>
+<li>Неизвестные флаги -&gt; сохраняются в <code>info.unknown</code> как сырые строки</li>
+<li>При <code>to_args()</code> -&gt; все флаги выводятся заново в точности как были получены</li>
+</ol>
+<p>Ваша обёртка не упадёт на новом nightly, и вы молча не потеряете экспериментальные флаги.</p>
+<h2 id="основные-моменты-api"><a class="header" href="#основные-моменты-api">Основные моменты API</a></h2>
+<h3 id="fetch---resultinfo-parseerror"><a class="header" href="#fetch---resultinfo-parseerror"><code>fetch() -&gt; Result&lt;Info, ParseError&gt;</code></a></h3>
+<p>Точка входа. Читает <code>std::env::args()</code>, разбирает в соответствии с протоколом обёртки
+и возвращает строго типизированную структуру <code>Info</code>.</p>
+<h3 id="структура-info-выбранные-поля"><a class="header" href="#структура-info-выбранные-поля">Структура <code>Info</code> (выбранные поля)</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Info {
+    // Метаданные протокола
+    pub rustc: Option&lt;String&gt;,        // Путь к реальному rustc, если предоставлен
+
+    // Общие флаги
+    pub crate_name: Option&lt;String&gt;,
+    pub edition: Option&lt;String&gt;,
+    pub target: Option&lt;String&gt;,
+    pub profile: Option&lt;String&gt;,      // "debug" или "release"
+
+    // Флаги действий
+    pub help: bool,
+    pub version: bool,
+    pub print: Option&lt;String&gt;,        // --print=&lt;kind&gt;
+
+    // Компилируемые единицы
+    pub inputs: Vec&lt;PathBuf&gt;,         // Исходные файлы
+    pub emit: Vec&lt;EmitKind&gt;,          // --emit=...
+    pub out_dir: Option&lt;PathBuf&gt;,
+
+    // Управление зависимостями
+    pub externs: Vec&lt;Extern&gt;,         // --extern crate=path
+    pub libpaths: Vec&lt;LibrarySearchPath&gt;, // -L kind=path
+    pub links: Vec&lt;LinkLib&gt;,          // -l kind:+mods=name:rename
+
+    // Генерация кода и диагностика
+    pub codegen_opts: Vec&lt;String&gt;,    // Значения флага -C
+    pub cfg: Vec&lt;String&gt;,             // Значения --cfg
+    pub features: Vec&lt;String&gt;,        // --cfg feature=...
+
+    // Всё остальное для неизвестных/nightly-флагов
+    pub unknown: Vec&lt;String&gt;,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="infoto_argsself---vecstring"><a class="header" href="#infoto_argsself---vecstring"><code>Info::to_args(&amp;self) -&gt; Vec&lt;String&gt;</code></a></h3>
+<p>Восстанавливает исходный список аргументов без потери данных. Используйте это при передаче аргументов реальному <code>rustc</code>.</p>
+<h3 id="parseerror"><a class="header" href="#parseerror"><code>ParseError</code></a></h3>
+<p>Лёгкий тип ошибки, который указывает, <em>почему</em> разбор не удался (например, отсутствует значение, неправильный флаг).
+Большинство инструментов-обёрток могут безопасно использовать <code>.expect()</code> на <code>fetch()</code>, поскольку Cargo гарантирует
+правильно сформированные вызовы — но ошибка доступна, если она вам понадобится.</p>
+<h2 id="продвинутый-уровень-изменение-контекста-компиляции"><a class="header" href="#продвинутый-уровень-изменение-контекста-компиляции">Продвинутый уровень: изменение контекста компиляции</a></h2>
+<p>Поскольку <code>Info</code> владеет своими данными, вы можете безопасно изменять поля перед восстановлением:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Принудительно устанавливаем опцию codegen для всех крейтов
+info.codegen_opts.push("target-cpu=native".to_string());
+
+// Условно добавляем флаг cfg
+if info.profile.as_deref() == Some("release") {
+    info.cfg.push("feature=\"optimised\"".to_string());
+}
+
+// Заменяем путь внешней зависимости
+for ext in &amp;mut info.externs {
+    if ext.name == "legacy_dep" {
+        ext.path = PathBuf::from("/new/path/liblegacy_dep.rlib");
+    }
+}
+<span class="boring">}</span></code></pre>
+<p>Все изменения отражаются в выводе <code>to_args()</code>.</p>
+<h2 id="тестирование-вашей-обёртки"><a class="header" href="#тестирование-вашей-обёртки">Тестирование вашей обёртки</a></h2>
+<p>Вам не нужно публиковать или устанавливать глобально для тестирования. Используйте <code>RUSTC_WRAPPER</code>:</p>
+<pre><code class="language-bash"># Собираем вашу обёртку
+cargo build --release
+
+# Указываем Cargo на ваш бинарный файл
+export RUSTC_WRAPPER="$(pwd)/target/release/my_wrapper"
+
+# Запускаем любую команду cargo — ваша обёртка перехватит вызовы rustc
+cargo build
+</code></pre>
+<blockquote>
+<p><strong>Совет от бывалого</strong>: Всегда проверяйте <code>info.help</code>, <code>info.version</code> и <code>info.print</code> на раннем этапе в вашем <code>main()</code>. Если какой-либо из них установлен, немедленно передайте аргументы в <code>rustc</code> и выйдите. Это предотвращает вмешательство вашей обёртки во внутренние зонды компилятора Cargo.</p>
+</blockquote>
+<h2 id="когда-использовать-wrapc"><a class="header" href="#когда-использовать-wrapc">Когда использовать <code>wrapc</code></a></h2>
+<p><strong>Идеален для</strong>:</p>
+<ul>
+<li>Кэшей компиляции (инструменты вроде <code>sccache</code>)</li>
+<li>Телеметрии или профилирования во время сборки</li>
+<li>Обёрток статического анализа</li>
+<li>Инжекторов флагов компоновщика или переменных окружения</li>
+<li>Любого инструмента, реализующего <code>RUSTC_WRAPPER</code></li>
+</ul>
+<p><strong>Не предназначен для</strong>:</p>
+<ul>
+<li>Универсального разбора CLI (используйте <code>clap</code>, <code>bpaf</code> или <code>argh</code>)</li>
+<li>Плагинов драйвера <code>rustc</code> (используйте API <code>rustc_driver</code>)</li>
+<li>Разбора аргументов <code>cargo</code> (используйте <code>cargo_metadata</code> или специализированные парсеры)</li>
+</ul>
+<h2 id="ссылки-4"><a class="header" href="#ссылки-4">Ссылки</a></h2>
+<p><a href="https://crates.io/wrapc">crates.io</a>
+<a href="https://docs.rs/wrapc">docs.rs</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="wrapcli-легко-подделывайте-идентичность-командной-строки"><a class="header" href="#wrapcli-легко-подделывайте-идентичность-командной-строки"><code>wrapcli</code>: Легко подделывайте идентичность командной строки</a></h1>
+<p><strong>wrapcli</strong> — это библиотека Rust, которая оборачивает существующий инструмент командной строки и переписывает его вывод на лету, делая так, чтобы выглядело, будто вывод был создан другим инструментом.</p>
+<h3 id="возможности"><a class="header" href="#возможности">Возможности</a></h3>
+<ul>
+<li>Потоковое переписывание вывода в реальном времени (строка за строкой)</li>
+<li>Захват полного вывода для постобработки</li>
+<li>Настраиваемые правила переписывания</li>
+<li>Опциональное сохранение оригинальной информации о версии</li>
+</ul>
+<h3 id="варианты-использования"><a class="header" href="#варианты-использования">Варианты использования</a></h3>
+<ul>
+<li>Создание брендированных вариантов CLI-инструментов</li>
+<li>Маскировка внутренних имён инструментов в выводе, видимом пользователю</li>
+<li>Добавление информации о версии без изменения нижележащего инструмента</li>
+<li>Интеграция устаревших инструментов в современные рабочие процессы</li>
+</ul>
+<h2 id="начало-работы"><a class="header" href="#начало-работы">Начало работы</a></h2>
+<h3 id="установка-1"><a class="header" href="#установка-1">Установка</a></h3>
+<p>Добавьте <code>wrapcli</code> в ваши зависимости:</p>
+<pre><code class="language-shell">cargo add wrapcli
+</code></pre>
+<h3 id="базовое-использование"><a class="header" href="#базовое-использование">Базовое использование</a></h3>
+<pre class="playground"><code class="language-rust">use wrapcli::{run_streaming, WrapConfig};
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let cfg = WrapConfig {
+        orig_name: "rustc".into(),
+        fake_name: "dustc".into(),
+        fake_ver: "2.0.0".into(),
+        save_orig: true,
+    };
+
+    let args: Vec&lt;String&gt; = std::env::args().skip(1).collect();
+    let status = run_streaming(&amp;cfg, args)?;
+    std::process::exit(status.code().unwrap_or(1));
+}</code></pre>
+<h2 id="как-это-работает"><a class="header" href="#как-это-работает">Как это работает</a></h2>
+<p>Когда обёрнутый инструмент выводит строку, содержащую оригинальное имя, <code>wrapcli</code> перехватывает её и применяет правила переписывания:</p>
+<ol>
+<li><strong>Первое вхождение</strong> оригинального имени и версии инструмента заменяется на поддельное имя и поддельную версию. Если <code>save_orig</code> равно <code>true</code>, оригинальная версия добавляется в скобках.</li>
+<li>Любые <strong>последующие вхождения</strong> оригинального имени в строках использования заменяются на поддельное имя.</li>
+</ol>
+<p>Это обеспечивает согласованное маскирование вывода без нарушения функциональности инструмента.</p>
+<h2 id="конфигурация"><a class="header" href="#конфигурация">Конфигурация</a></h2>
+<p>Структура <code>WrapConfig</code> управляет поведением переписывания.</p>
+<h3 id="поля"><a class="header" href="#поля">Поля</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Поле</th><th>Тип</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>orig_name</code></td><td><code>String</code></td><td>Оригинальное имя инструмента (например, <code>"rustc"</code>)</td></tr>
+<tr><td><code>fake_name</code></td><td><code>String</code></td><td>Имя, которое будет отображаться вместо него (например, <code>"dustc"</code>)</td></tr>
+<tr><td><code>fake_ver</code></td><td><code>String</code></td><td>Строка версии для отображения (например, <code>"2.0.0"</code>)</td></tr>
+<tr><td><code>save_orig</code></td><td><code>bool</code></td><td>Нужно ли добавлять оригинальную версию в скобках</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="пример"><a class="header" href="#пример">Пример</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use wrapcli::WrapConfig;
+
+let cfg = WrapConfig {
+    orig_name: "git".into(),
+    fake_name: "gitter".into(),
+    fake_ver: "3.0.0".into(),
+    save_orig: false,
+};
+<span class="boring">}</span></code></pre>
+<h2 id="примеры"><a class="header" href="#примеры">Примеры</a></h2>
+<h3 id="потоковый-вывод"><a class="header" href="#потоковый-вывод">Потоковый вывод</a></h3>
+<pre class="playground"><code class="language-rust">use wrapcli::{run_streaming, WrapConfig};
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let cfg = WrapConfig {
+        orig_name: "cargo".into(),
+        fake_name: "pargo".into(),
+        fake_ver: "2.0.0".into(),
+        save_orig: true,
+    };
+
+    let args = vec!["--version".to_string()];
+    run_streaming(&amp;cfg, args)?;
+    Ok(())
+}</code></pre>
+<h3 id="захват-вывода"><a class="header" href="#захват-вывода">Захват вывода</a></h3>
+<pre class="playground"><code class="language-rust">use wrapcli::{run_capture, WrapConfig};
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let cfg = WrapConfig {
+        orig_name: "rustc".into(),
+        fake_name: "dustc".into(),
+        fake_ver: "2.0.0".into(),
+        save_orig: false,
+    };
+
+    let args = vec!["--version".to_string()];
+    let result = run_capture(&amp;cfg, args)?;
+    
+    println!("Захваченный stdout: {}", String::from_utf8_lossy(&amp;result.stdout));
+    println!("Захваченный stderr: {}", String::from_utf8_lossy(&amp;result.stderr));
+    Ok(())
+}</code></pre>
+<h3 id="реальный-пример-обёртка-для-git"><a class="header" href="#реальный-пример-обёртка-для-git">Реальный пример: обёртка для Git</a></h3>
+<pre class="playground"><code class="language-rust">use wrapcli::{run_streaming, WrapConfig};
+use std::env;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let cfg = WrapConfig {
+        orig_name: "git".into(),
+        fake_name: "gitter".into(),
+        fake_ver: "3.0.0".into(),
+        save_orig: true,
+    };
+
+    let args: Vec&lt;String&gt; = env::args().skip(1).collect();
+    run_streaming(&amp;cfg, args)
+}</code></pre>
+<h2 id="ссылки-5"><a class="header" href="#ссылки-5">Ссылки</a></h2>
+<p><a href="https://crates.io/wrapcli">crates.io</a>
+<a href="https://docs.rs/wrapcli">docs.rs</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
