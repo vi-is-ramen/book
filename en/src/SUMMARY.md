@@ -15,3 +15,4 @@
   - [✅ Lazy Loading, Smart Caching: The `lazyget` Crate](./my-crates/lazyget.md)
   - [✅ `wrapc`: Parsing `rustc` Arguments for `RUSTC_WRAPPER` Tools](./my-crates/wrapc.md)
   - [✅ `wrapcli`: Fake Command Identity With Ease](./my-crates/wrapcli.md)
+  - [✅ `faces`: Unifying Interfaces Across Crates](./my-crates/faces.md)

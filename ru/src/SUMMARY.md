@@ -15,3 +15,4 @@
   - [✅ Ленивая Загрузка, Умное Кеширование: Крейт `lazyget`](./my-crates/lazyget.md)
   - [✅ `wrapc`: Разбор аргументов `rustc` для инструментов `RUSTC_WRAPPER`](./my-crates/wrapc.md)
   - [✅ `wrapcli`: Легко подделывайте идентичность командной строки](./my-crates/wrapcli.md)
+  - [✅ `faces`: Унификация интерфейсов между крейтами](./my-crates/faces.md)
